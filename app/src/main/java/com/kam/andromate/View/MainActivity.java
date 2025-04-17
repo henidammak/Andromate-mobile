@@ -1,4 +1,4 @@
-package com.kam.andromate.View;
+package com.kam.andromate.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.kam.andromate.IConstants;
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketClient;
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketInterface;
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketObserver;
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketClient;
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterface;
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
 import com.kam.andromate.R;
 
 import okhttp3.Response;

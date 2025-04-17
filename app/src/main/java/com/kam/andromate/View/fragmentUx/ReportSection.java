@@ -1,4 +1,4 @@
-package com.kam.andromate.View.fragmentUx;
+package com.kam.andromate.view.fragmentUx;
 
 import android.widget.TextView;
 

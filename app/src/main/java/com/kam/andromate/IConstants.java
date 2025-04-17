@@ -9,4 +9,6 @@ public interface IConstants {
 
     String WEB_SOCKET_DEFAULT_IP = "ws://192.168.1.31:8765"; // websocket wifi server
     String DEBUG_TAG = "AndroMateTag";
+
+    String EMPTY_STRING = "";
 }

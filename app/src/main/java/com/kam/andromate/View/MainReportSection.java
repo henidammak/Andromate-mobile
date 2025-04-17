@@ -1,8 +1,8 @@
-package com.kam.andromate.View;
+package com.kam.andromate.view;
 
 import android.widget.TextView;
 
-import com.kam.andromate.View.fragmentUx.ReportSection;
+import com.kam.andromate.view.fragmentUx.ReportSection;
 
 public class MainReportSection {
 
