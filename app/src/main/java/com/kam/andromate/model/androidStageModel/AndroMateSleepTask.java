@@ -1,12 +1,11 @@
 package com.kam.andromate.model.androidStageModel;
 
-import com.kam.andromate.IConstants;
-import com.kam.andromate.model.AndroidStage;
-import com.kam.andromate.model.PipelineStage;
+import com.kam.andromate.model.AndroidTask;
+import com.kam.andromate.model.PipelineTask;
 
 import org.json.JSONObject;
 
-public class SleepStage extends AndroidStage {
+public class AndroMateSleepTask extends AndroidTask {
 
     public final static String TAG_TIME_SLEEP = "Time_sleep";
 
@@ -16,8 +15,12 @@ public class SleepStage extends AndroidStage {
 
     private long timeSleep;
 
-    public SleepStage(long timeSleep) {
+    public AndroMateSleepTask(long timeSleep) {
         this.timeSleep = timeSleep;
+    }
+
+    public AndroMateSleepTask(JSONObject jo) {
+        this.timeSleep = jo.optLong(TAG_TIME_SLEEP,DEFAULT_TIME_SLEEP);
     }
 
     public long getTimeSleep() {
@@ -29,8 +32,8 @@ public class SleepStage extends AndroidStage {
     }
 
     @Override
-    public PipelineStage jsonToPipeLine(JSONObject jo) {
-        return new SleepStage(
+    public PipelineTask jsonToPipeLine(JSONObject jo) {
+        return new AndroMateSleepTask(
                 jo.optLong(TAG_TIME_SLEEP,DEFAULT_TIME_SLEEP)
         );
     }

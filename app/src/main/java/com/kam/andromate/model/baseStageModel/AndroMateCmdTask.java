@@ -1,12 +1,12 @@
 package com.kam.andromate.model.baseStageModel;
 
 import com.kam.andromate.IConstants;
-import com.kam.andromate.model.BaseStage;
-import com.kam.andromate.model.PipelineStage;
+import com.kam.andromate.model.BaseTask;
+import com.kam.andromate.model.PipelineTask;
 
 import org.json.JSONObject;
 
-public class CmdStage extends BaseStage {
+public class AndroMateCmdTask extends BaseTask {
 
     public final static String TAG_CMD_TEXT = "cmd_text";
     public final static String TAG_CMD_ROOT = "root";
@@ -19,9 +19,14 @@ public class CmdStage extends BaseStage {
     private String cmdText;
     private boolean cmdRoot;
 
-    public CmdStage(String cmdText, boolean cmdRoot) {
+    public AndroMateCmdTask(String cmdText, boolean cmdRoot) {
         this.cmdText = cmdText;
         this.cmdRoot = cmdRoot;
+    }
+
+    public AndroMateCmdTask(JSONObject jo) {
+        this.cmdText = jo.optString(TAG_CMD_TEXT, DEFAULT_CMD_TEXT);
+        this.cmdRoot = jo.optBoolean(TAG_CMD_ROOT,DEFAULT_CMD_ROOT);
     }
 
     public String getCmdText() {
@@ -42,8 +47,8 @@ public class CmdStage extends BaseStage {
 
 
     @Override
-    public PipelineStage jsonToPipeLine(JSONObject jo) {
-        return new CmdStage(
+    public PipelineTask jsonToPipeLine(JSONObject jo) {
+        return new AndroMateCmdTask(
                 jo.optString(TAG_CMD_TEXT, DEFAULT_CMD_TEXT),
                 jo.optBoolean(TAG_CMD_ROOT,DEFAULT_CMD_ROOT)
         );

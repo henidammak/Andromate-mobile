@@ -1,12 +1,13 @@
 package com.kam.andromate.model.androidStageModel;
 
 import com.kam.andromate.IConstants;
-import com.kam.andromate.model.AndroidStage;
-import com.kam.andromate.model.PipelineStage;
+import com.kam.andromate.model.AndroidTask;
+import com.kam.andromate.model.PipelineTask;
 
 import org.json.JSONObject;
 
-public class IntentStage extends AndroidStage {
+
+public class AndroMateIntentTask extends AndroidTask {
 
     public final static String TAG_INTENT_ACTION = "Action";
     public final static String TAG_INTENT_PACKAGE_NAME = "PackageName";
@@ -30,12 +31,21 @@ public class IntentStage extends AndroidStage {
     private String intentData;
     private String intentActionType;
 
-    public IntentStage(String intentAction, String intentPackageName, String intentClassName, String intentData, String intentActionType) {
+    public AndroMateIntentTask(String intentAction, String intentPackageName, String intentClassName,
+                                String intentData, String intentActionType) {
         this.intentAction = intentAction;
         this.intentPackageName = intentPackageName;
         this.intentClassName = intentClassName;
         this.intentData = intentData;
         this.intentActionType = intentActionType;
+    }
+
+    public AndroMateIntentTask(JSONObject jo) {
+        this.intentAction = jo.optString(TAG_INTENT_ACTION, DEFAULT_INTENT_ACTION);
+        this.intentPackageName = jo.optString(TAG_INTENT_PACKAGE_NAME, DEFAULT_INTENT_PACKAGE_NAME);
+        this.intentClassName = jo.optString(TAG_INTENT_CLASS_NAME, DEFAULT_INTENT_CLASS_NAME);
+        this.intentData = jo.optString(TAG_INTENT_DATA, DEFAULT_INTENT_DATA);
+        this.intentActionType = jo.optString(TAG_INTENT_ACTION_TYPE, DEFAULT_INTENT_ACTION_TYPE);
     }
     
     public String getIntentAction() {
@@ -79,8 +89,8 @@ public class IntentStage extends AndroidStage {
     }
 
     @Override
-    public PipelineStage jsonToPipeLine(JSONObject jo) {
-        return new IntentStage(
+    public PipelineTask jsonToPipeLine(JSONObject jo) {
+        return new AndroMateIntentTask(
                 jo.optString(TAG_INTENT_ACTION, DEFAULT_INTENT_ACTION),
                 jo.optString(TAG_INTENT_PACKAGE_NAME, DEFAULT_INTENT_PACKAGE_NAME),
                 jo.optString(TAG_INTENT_CLASS_NAME, DEFAULT_INTENT_CLASS_NAME),

@@ -1,12 +1,12 @@
 package com.kam.andromate.model.baseStageModel;
 
 import com.kam.andromate.IConstants;
-import com.kam.andromate.model.BaseStage;
-import com.kam.andromate.model.PipelineStage;
+import com.kam.andromate.model.BaseTask;
+import com.kam.andromate.model.PipelineTask;
 
 import org.json.JSONObject;
 
-public class ScreenAutomatorStage extends BaseStage {
+public class ScreenAutomatorTask extends BaseTask {
 
     public final static String TAG_ACTION_TYPE= "Action_type";
     public final static String TAG_GLOBAL_ACTION_TYPE= "GlobalAction_type";
@@ -39,16 +39,28 @@ public class ScreenAutomatorStage extends BaseStage {
     private long ClickInXY_Y;
     private boolean LogScreen;
 
-    public ScreenAutomatorStage(String action_type, long globalAction_type, String clickInText_textSelector, String clickInText_CompareType, long clickInText_Index, String clickInText_text, long clickInXY_X, long clickInXY_Y, boolean logScreen) {
-        Action_type = action_type;
-        GlobalAction_type = globalAction_type;
-        ClickInText_textSelector = clickInText_textSelector;
-        ClickInText_CompareType = clickInText_CompareType;
-        ClickInText_Index = clickInText_Index;
-        ClickInText_text = clickInText_text;
-        ClickInXY_X = clickInXY_X;
-        ClickInXY_Y = clickInXY_Y;
-        LogScreen = logScreen;
+    public ScreenAutomatorTask(String action_type, long globalAction_type, String clickInText_textSelector, String clickInText_CompareType, long clickInText_Index, String clickInText_text, long clickInXY_X, long clickInXY_Y, boolean logScreen) {
+        this.Action_type = action_type;
+        this.GlobalAction_type = globalAction_type;
+        this.ClickInText_textSelector = clickInText_textSelector;
+        this.ClickInText_CompareType = clickInText_CompareType;
+        this.ClickInText_Index = clickInText_Index;
+        this.ClickInText_text = clickInText_text;
+        this.ClickInXY_X = clickInXY_X;
+        this.ClickInXY_Y = clickInXY_Y;
+        this.LogScreen = logScreen;
+    }
+
+    public ScreenAutomatorTask(JSONObject jo) {
+        this.Action_type = jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE);
+        this.GlobalAction_type = jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE);
+        this.ClickInText_textSelector = jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR);
+        this.ClickInText_CompareType = jo.optString(TAG_CLICK_IN_TEXT_COMPARE_TYPE,DEFAULT_CLICK_IN_TEXT_COMPARE_TYPE);
+        this.ClickInText_Index = jo.optLong(TAG_CLICK_IN_TEXT_INDEX,DEFAULT_CLICK_IN_TEXT_INDEX);
+        this.ClickInText_text = jo.optString(TAG_CLICK_IN_TEXT_TEXT,DEFAULT_CLICK_IN_TEXT_TEXT);
+        this.ClickInXY_X = jo.optLong(TAG_CLICK_IN_XY_X,DEFAULT_CLICK_IN_XY_X);
+        this.ClickInXY_Y = jo.optLong(TAG_CLICK_IN_XY_Y,DEFAULT_CLICK_IN_XY_Y);
+        this.LogScreen = jo.optBoolean(TAG_LOGSCREEN,DEFAULT_LOGSCREEN);
     }
 
     public String getAction_type() {
@@ -124,8 +136,8 @@ public class ScreenAutomatorStage extends BaseStage {
     }
 
     @Override
-    public PipelineStage jsonToPipeLine(JSONObject jo) {
-        return new ScreenAutomatorStage(
+    public PipelineTask jsonToPipeLine(JSONObject jo) {
+        return new ScreenAutomatorTask(
                 jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE),
                 jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE),
                 jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR),
