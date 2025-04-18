@@ -53,4 +53,9 @@ public class AndroMateCmdTask extends BaseTask {
                 jo.optBoolean(TAG_CMD_ROOT,DEFAULT_CMD_ROOT)
         );
     }
+
+    @Override
+    public void executeTask() {
+
+    }
 }

@@ -37,4 +37,9 @@ public class AndroMateSleepTask extends AndroidTask {
                 jo.optLong(TAG_TIME_SLEEP,DEFAULT_TIME_SLEEP)
         );
     }
+
+    @Override
+    public void executeTask() {
+
+    }
 }

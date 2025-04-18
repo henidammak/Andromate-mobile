@@ -98,6 +98,11 @@ public class AndroMateIntentTask extends AndroidTask {
                 jo.optString(TAG_INTENT_ACTION_TYPE, DEFAULT_INTENT_ACTION_TYPE)
         );
     }
-    
-    
+
+    @Override
+    public void executeTask() {
+
+    }
+
+
 }

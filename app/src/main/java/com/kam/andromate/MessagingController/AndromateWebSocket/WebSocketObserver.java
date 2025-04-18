@@ -1,4 +1,4 @@
-package com.kam.andromate.messagingController.AndromateWebSocket;
+package com.kam.andromate.MessagingController.AndromateWebSocket;
 
 import android.util.Log;
 

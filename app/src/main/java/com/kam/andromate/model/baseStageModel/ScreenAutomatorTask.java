@@ -150,4 +150,9 @@ public class ScreenAutomatorTask extends BaseTask {
 
                 );
     }
+
+    @Override
+    public void executeTask() {
+
+    }
 }

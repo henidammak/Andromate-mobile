@@ -1,4 +1,4 @@
-package com.kam.andromate.messagingController.AndromateWebSocket;
+package com.kam.andromate.MessagingController.AndromateWebSocket;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

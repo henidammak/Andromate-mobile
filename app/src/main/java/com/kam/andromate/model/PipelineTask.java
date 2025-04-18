@@ -6,4 +6,6 @@ public abstract class PipelineTask {
 
     abstract public PipelineTask jsonToPipeLine(JSONObject jo);
 
+    abstract public void executeTask();
+
 }
