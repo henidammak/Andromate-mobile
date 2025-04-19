@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
         AndroMateDevice.setInstance(getApplicationContext());
-        mainReportSection.initTexts();
+        mainReportSection.initAndroMateReportInfo();
     }
 
     private void initClickEvent() {

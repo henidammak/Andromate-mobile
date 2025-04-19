@@ -13,7 +13,7 @@ public class MainReportSection extends ReportSection{
         super(terminalView);
     }
 
-    public void initTexts() {
+    public void initAndroMateReportInfo() {
         appendFmvKey("Date", TimeUtils.getCurrentTimeAsSimpleFormat());
         AndroMateDevice androMateDevice = AndroMateDevice.getInstance();
         if (androMateDevice != null) {
@@ -23,6 +23,7 @@ public class MainReportSection extends ReportSection{
             appendFmvKey("Device id", androMateDevice.getDeviceId());
             appendFmvKey("Hardware", androMateDevice.getCpuHardware());
             appendFmvKey("Resolution", androMateDevice.getScreenResolution());
+            discMargin();
         }
     }
 
