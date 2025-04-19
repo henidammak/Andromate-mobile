@@ -10,7 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.kam.andromate.AndroMateDevice;
+import com.kam.andromate.singletons.AndroMateApp;
+import com.kam.andromate.singletons.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
         AndroMateDevice.setInstance(getApplicationContext());
+        AndroMateApp.setInstance(getApplicationContext());
         mainReportSection.initAndroMateReportInfo();
     }
 

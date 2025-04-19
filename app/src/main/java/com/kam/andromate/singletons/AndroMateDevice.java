@@ -1,7 +1,6 @@
-package com.kam.andromate;
+package com.kam.andromate.singletons;
 
 import android.content.Context;
-import android.os.Build;
 
 import com.kam.andromate.utils.DeviceUtils;
 

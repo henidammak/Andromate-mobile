@@ -7,7 +7,9 @@ public interface IConstants {
 
     boolean SHOW_EXECUTE_BAR = false;
 
-    String WEB_SOCKET_DEFAULT_IP = "ws://192.168.1.31:8765"; // websocket wifi server
+    String WEB_SOCKET_DOMAIN = "192.168.1.31";
+    int WEB_SOCKET_PORT = 8765;
+    String WEB_SOCKET_DEFAULT_IP = "ws://"+WEB_SOCKET_DOMAIN+":"+WEB_SOCKET_PORT; // websocket wifi server
 
     String EMPTY_STRING = "";
 }
