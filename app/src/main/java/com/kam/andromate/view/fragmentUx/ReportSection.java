@@ -72,4 +72,8 @@ public class ReportSection {
         terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
+    public void clear() {
+        terminalView.setText("");
+    }
+
 }

@@ -12,4 +12,6 @@ public interface IConstants {
     String WEB_SOCKET_DEFAULT_IP = "ws://"+WEB_SOCKET_DOMAIN+":"+WEB_SOCKET_PORT; // websocket wifi server
 
     String EMPTY_STRING = "";
+
+    String APP_RESTART_RECEIVER = "app_restart_receiver";
 }

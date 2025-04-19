@@ -1,7 +1,10 @@
 package com.kam.andromate.utils;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+
+import com.kam.andromate.IConstants;
+
 
 public class AppUtils {
 
@@ -11,6 +14,11 @@ public class AppUtils {
             versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (Throwable ignored) {}
         return versionName;
+    }
+
+    public static void rebootApp(Context context) {
+        Intent intent = new Intent(IConstants.APP_RESTART_RECEIVER);
+        context.sendBroadcast(intent);
     }
 
 }
