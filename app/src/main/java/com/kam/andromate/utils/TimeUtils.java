@@ -10,4 +10,9 @@ public class TimeUtils {
         return new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
     }
 
+    public String getCurrentDateAsSimpleFormat() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
 }

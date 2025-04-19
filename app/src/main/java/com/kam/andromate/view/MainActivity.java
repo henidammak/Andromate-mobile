@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.kam.andromate.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 
@@ -24,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
-        for (int i=0; i<100; i++) {
-            mainReportSection.appendFmvKey("tag", "hello from androMate");
-        }
+        AndroMateDevice.setInstance(getApplicationContext());
+        mainReportSection.initTexts();
     }
 
     private void initClickEvent() {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         });
         initView();
         initClickEvent();
-        mainReportSection.appendMsg("hello from mainReport section");
     }
 
     @Override

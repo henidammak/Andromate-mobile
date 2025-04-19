@@ -14,6 +14,7 @@ public class ReportSection {
     private static final String BR_END = "<br/>";
     private static final String RED_COLOR_HTML_CODE = "<font color='#FF0000'><b>";
     private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'><b>";
+    private static final String BLUE_COLOR_HTML_CODE = "<font color='#0000A0'><b>";
 
 
     TextView terminalView = null;
@@ -60,6 +61,12 @@ public class ReportSection {
     public void errorMsg(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
                 RED_COLOR_HTML_CODE +"E-"+ text + FONT_HTML_CODE+BR_END;
+        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+    }
+
+    public void appendTitle(String text) {
+        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
+                BLUE_COLOR_HTML_CODE +text + FONT_HTML_CODE+BR_END;
         terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
