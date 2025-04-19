@@ -16,7 +16,7 @@ public class DeviceUtils {
             String str = Settings.Secure.getString(context.getContentResolver(),
                     Settings.Secure.ANDROID_ID);
             result = str != null ? str.substring(str.length() - 15) : "";
-        } catch (Throwable t) {}
+        } catch (Throwable ignored) {}
         return result;
     }
 
