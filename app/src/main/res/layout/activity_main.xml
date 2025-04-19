@@ -92,13 +92,17 @@
 
     <TextView
         android:id="@+id/androidMateReportSectionId"
+        android:padding="4dp"
+        android:textSize="12sp"
+        android:scrollHorizontally="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:requiresFadingEdge="vertical" android:fadingEdge="vertical" android:fadingEdgeLength="16dp"
         android:freezesText="true"
         android:gravity="bottom"
         android:textColor="@color/black"
-        android:scrollbars="vertical"
+        android:scrollbars="vertical|horizontal"
         android:background="@drawable/border"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:typeface="monospace" />

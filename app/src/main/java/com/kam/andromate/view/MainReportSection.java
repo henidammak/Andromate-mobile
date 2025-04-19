@@ -4,28 +4,10 @@ import android.widget.TextView;
 
 import com.kam.andromate.view.fragmentUx.ReportSection;
 
-public class MainReportSection {
+public class MainReportSection extends ReportSection{
 
-    private static MainReportSection mainReportSection = null;
-    private ReportSection reportSection = null;
 
-    private MainReportSection(ReportSection reportSection) {
-        this.reportSection = reportSection;
+    public MainReportSection(TextView terminalView) {
+        super(terminalView);
     }
-
-    public static MainReportSection initInstance(TextView textView) {
-        if (mainReportSection == null) {
-            mainReportSection = new MainReportSection(new ReportSection(textView));
-        }
-        return mainReportSection;
-    }
-
-    public static MainReportSection getMainReportSection() {
-        return mainReportSection;
-    }
-
-    public void appendMsg(String text) {
-        reportSection.appendMsg(text);
-    }
-
 }
