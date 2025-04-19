@@ -8,16 +8,18 @@ import com.kam.andromate.utils.TimeUtils;
 
 public class ReportSection {
 
-    private static final String BLACK_COLOR_HTML_CODE = "<font color='#000000'><b>";
+
     private static final String FONT_HTML_CODE = "</font>";
-    private static final String HTML_B_FONT_END = "</b></font>";
+    private static final String HTML_B_FONT_END = "</b>"+FONT_HTML_CODE;
     private static final String BR_END = "<br/>";
-    private static final String RED_COLOR_HTML_CODE = "<font color='#FF0000'><b>";
-    private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'><b>";
-    private static final String BLUE_COLOR_HTML_CODE = "<font color='#0000A0'><b>";
+    private static final String HTML_B_FONT_START = "<b>";
+    private static final String BLACK_COLOR_HTML_CODE = "<font color='#000000'>"+HTML_B_FONT_START;
+    private static final String RED_COLOR_HTML_CODE   = "<font color='#FF0000'>"+HTML_B_FONT_START;
+    private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'>"+HTML_B_FONT_START;
+    private static final String BLUE_COLOR_HTML_CODE  = "<font color='#0000A0'>"+HTML_B_FONT_START;
 
 
-    TextView terminalView = null;
+    TextView terminalView;
 
     boolean margin = false;
 
@@ -46,8 +48,8 @@ public class ReportSection {
     }
 
     public void appendFmvKey(String key, String text) {
-        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + key+": " + HTML_B_FONT_END
-                + text + BR_END;
+        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + key+": "
+                + HTML_B_FONT_END + text + BR_END;
         terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 

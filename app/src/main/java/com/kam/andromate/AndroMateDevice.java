@@ -7,10 +7,10 @@ import com.kam.andromate.utils.DeviceUtils;
 
 public class AndroMateDevice {
 
-    private String deviceId;
-    private String cpuHardware;
-    private String screenResolution;
-    private String deviceFactory;
+    private final String deviceId;
+    private final String cpuHardware;
+    private final String screenResolution;
+    private final String deviceFactory;
 
     public String getDeviceFactory() {
         return deviceFactory;

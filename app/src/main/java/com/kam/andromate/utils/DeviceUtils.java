@@ -1,5 +1,6 @@
 package com.kam.andromate.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
@@ -11,7 +12,9 @@ public class DeviceUtils {
     public static String getCurrentDeviceId(Context context) {
         String result = "000000000000000";
         try {
-            String str = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            @SuppressLint("HardwareIds")
+            String str = Settings.Secure.getString(context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
             result = str != null ? str.substring(str.length() - 15) : "";
         } catch (Throwable t) {}
         return result;
