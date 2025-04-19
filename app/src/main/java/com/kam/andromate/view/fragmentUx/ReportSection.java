@@ -12,7 +12,8 @@ public class ReportSection {
     private static final String FONT_HTML_CODE = "</font>";
     private static final String HTML_B_FONT_END = "</b></font>";
     private static final String BR_END = "<br/>";
-    private static final String RED_COLOR_HTML_CODE = "<font color='#FF0000'>";
+    private static final String RED_COLOR_HTML_CODE = "<font color='#FF0000'><b>";
+    private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'><b>";
 
 
     TextView terminalView = null;
@@ -44,15 +45,21 @@ public class ReportSection {
     }
 
     public void appendFmvKey(String key, String text) {
-        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + key + HTML_B_FONT_END
+        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + key+": " + HTML_B_FONT_END
                 + text + BR_END;
+        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+    }
+
+    public void info(String text) {
+        String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
+                GREEN_COLOR_HTML_CODE + text + FONT_HTML_CODE+BR_END;
         terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
 
     public void errorMsg(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
-                RED_COLOR_HTML_CODE + text + FONT_HTML_CODE+BR_END;
+                RED_COLOR_HTML_CODE +"E-"+ text + FONT_HTML_CODE+BR_END;
         terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 

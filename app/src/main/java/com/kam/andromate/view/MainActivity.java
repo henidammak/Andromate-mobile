@@ -19,9 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mainReportSection = new MainReportSection(findViewById(R.id.androidMateReportSectionId));
         execButton = findViewById(R.id.send_btn);
-        mainReportSection.incMargin();
         for (int i=0; i<100; i++) {
-            mainReportSection.appendFmvKey("tag: ","hello from androMate");
+            mainReportSection.appendFmvKey("tag", "hello from androMate");
         }
     }
 
