@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mainReportSection = new MainReportSection(findViewById(R.id.androidMateReportSectionId));
         execButton = findViewById(R.id.send_btn);
+        if (!IConstants.SHOW_EXECUTE_BAR) {
+            findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
+        }
         for (int i=0; i<100; i++) {
             mainReportSection.appendFmvKey("tag", "hello from androMate");
         }
