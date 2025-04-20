@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 public class AndroMateCmdTask extends BaseTask {
 
+    public final static String JSON_TAG_NAME = "Cmd Stage";
+
     public final static String TAG_CMD_TEXT = "cmd_text";
     public final static String TAG_CMD_ROOT = "root";
 
@@ -57,5 +59,10 @@ public class AndroMateCmdTask extends BaseTask {
     @Override
     public void executeTask() {
 
+    }
+
+    @Override
+    protected String getJsonTaskTagName() {
+        return "Cmd Stage";
     }
 }

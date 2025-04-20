@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 public class AndroMateSleepTask extends AndroidTask {
 
+    public final static String JSON_TAG_NAME = "Sleep";
+
     public final static String TAG_TIME_SLEEP = "Time_sleep";
 
 
@@ -41,5 +43,10 @@ public class AndroMateSleepTask extends AndroidTask {
     @Override
     public void executeTask() {
 
+    }
+
+    @Override
+    protected String getJsonTaskTagName() {
+        return "Sleep";
     }
 }

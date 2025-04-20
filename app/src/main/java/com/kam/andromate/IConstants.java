@@ -14,4 +14,5 @@ public interface IConstants {
     String EMPTY_STRING = "";
 
     String APP_RESTART_RECEIVER = "app_restart_receiver";
+    String COMPOSITE_JSON_TAG_NAME = "CompositeTask";
 }
