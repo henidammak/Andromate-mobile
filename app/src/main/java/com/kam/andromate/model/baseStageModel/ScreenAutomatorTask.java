@@ -16,7 +16,7 @@ public class ScreenAutomatorTask extends BaseTask {
     public final static String TAG_CLICK_IN_TEXT_TEXT= "ClickInText_text";
     public final static String TAG_CLICK_IN_XY_X= "ClickInXY_X";
     public final static String TAG_CLICK_IN_XY_Y= "ClickInXY_Y";
-    public final static String TAG_LOGSCREEN= "LogScreen";
+    public final static String TAG_LOG_SCREEN= "LogScreen";
 
 
     public final static String DEFAULT_ACTION_TYPE= IConstants.EMPTY_STRING;
@@ -27,112 +27,115 @@ public class ScreenAutomatorTask extends BaseTask {
     public final static String DEFAULT_CLICK_IN_TEXT_TEXT= IConstants.EMPTY_STRING;
     public final static long DEFAULT_CLICK_IN_XY_X= 0;
     public final static long DEFAULT_CLICK_IN_XY_Y= 0;
-    public final static boolean DEFAULT_LOGSCREEN= false;
+    public final static boolean DEFAULT_LOG_SCREEN= false;
 
-    private String Action_type;
-    private long GlobalAction_type;
-    private String ClickInText_textSelector;
-    private String ClickInText_CompareType;
-    private long ClickInText_Index;
-    private String ClickInText_text;
-    private long ClickInXY_X;
-    private long ClickInXY_Y;
-    private boolean LogScreen;
+    private String action_type;
+    private long globalAction_type;
+    private String clickInText_textSelector;
+    private String clickInText_CompareType;
+    private long clickInText_Index;
+    private String clickInText_text;
+    private long clickInXY_X;
+    private long clickInXY_Y;
+    private boolean log_screen;
 
-    public ScreenAutomatorTask(String action_type, long globalAction_type, String clickInText_textSelector, String clickInText_CompareType, long clickInText_Index, String clickInText_text, long clickInXY_X, long clickInXY_Y, boolean logScreen) {
-        this.Action_type = action_type;
-        this.GlobalAction_type = globalAction_type;
-        this.ClickInText_textSelector = clickInText_textSelector;
-        this.ClickInText_CompareType = clickInText_CompareType;
-        this.ClickInText_Index = clickInText_Index;
-        this.ClickInText_text = clickInText_text;
-        this.ClickInXY_X = clickInXY_X;
-        this.ClickInXY_Y = clickInXY_Y;
-        this.LogScreen = logScreen;
+    public ScreenAutomatorTask(String action_type, long globalAction_type,
+                               String clickInText_textSelector, String clickInText_CompareType,
+                               long clickInText_Index, String clickInText_text, long clickInXY_X,
+                               long clickInXY_Y, boolean log_screen) {
+        this.action_type = action_type;
+        this.globalAction_type = globalAction_type;
+        this.clickInText_textSelector = clickInText_textSelector;
+        this.clickInText_CompareType = clickInText_CompareType;
+        this.clickInText_Index = clickInText_Index;
+        this.clickInText_text = clickInText_text;
+        this.clickInXY_X = clickInXY_X;
+        this.clickInXY_Y = clickInXY_Y;
+        this.log_screen = log_screen;
     }
 
     public ScreenAutomatorTask(JSONObject jo) {
-        this.Action_type = jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE);
-        this.GlobalAction_type = jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE);
-        this.ClickInText_textSelector = jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR);
-        this.ClickInText_CompareType = jo.optString(TAG_CLICK_IN_TEXT_COMPARE_TYPE,DEFAULT_CLICK_IN_TEXT_COMPARE_TYPE);
-        this.ClickInText_Index = jo.optLong(TAG_CLICK_IN_TEXT_INDEX,DEFAULT_CLICK_IN_TEXT_INDEX);
-        this.ClickInText_text = jo.optString(TAG_CLICK_IN_TEXT_TEXT,DEFAULT_CLICK_IN_TEXT_TEXT);
-        this.ClickInXY_X = jo.optLong(TAG_CLICK_IN_XY_X,DEFAULT_CLICK_IN_XY_X);
-        this.ClickInXY_Y = jo.optLong(TAG_CLICK_IN_XY_Y,DEFAULT_CLICK_IN_XY_Y);
-        this.LogScreen = jo.optBoolean(TAG_LOGSCREEN,DEFAULT_LOGSCREEN);
+        this.action_type = jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE);
+        this.globalAction_type = jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE);
+        this.clickInText_textSelector = jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR);
+        this.clickInText_CompareType = jo.optString(TAG_CLICK_IN_TEXT_COMPARE_TYPE,DEFAULT_CLICK_IN_TEXT_COMPARE_TYPE);
+        this.clickInText_Index = jo.optLong(TAG_CLICK_IN_TEXT_INDEX,DEFAULT_CLICK_IN_TEXT_INDEX);
+        this.clickInText_text = jo.optString(TAG_CLICK_IN_TEXT_TEXT,DEFAULT_CLICK_IN_TEXT_TEXT);
+        this.clickInXY_X = jo.optLong(TAG_CLICK_IN_XY_X,DEFAULT_CLICK_IN_XY_X);
+        this.clickInXY_Y = jo.optLong(TAG_CLICK_IN_XY_Y,DEFAULT_CLICK_IN_XY_Y);
+        this.log_screen = jo.optBoolean(TAG_LOG_SCREEN,DEFAULT_LOG_SCREEN);
     }
 
     public String getAction_type() {
-        return Action_type;
+        return action_type;
     }
 
     public void setAction_type(String action_type) {
-        Action_type = action_type;
+        this.action_type = action_type;
     }
 
     public long getGlobalAction_type() {
-        return GlobalAction_type;
+        return globalAction_type;
     }
 
     public void setGlobalAction_type(long globalAction_type) {
-        GlobalAction_type = globalAction_type;
+        this.globalAction_type = globalAction_type;
     }
 
     public String getClickInText_textSelector() {
-        return ClickInText_textSelector;
+        return clickInText_textSelector;
     }
 
     public void setClickInText_textSelector(String clickInText_textSelector) {
-        ClickInText_textSelector = clickInText_textSelector;
+        this.clickInText_textSelector = clickInText_textSelector;
     }
 
     public String getClickInText_CompareType() {
-        return ClickInText_CompareType;
+        return clickInText_CompareType;
     }
 
     public void setClickInText_CompareType(String clickInText_CompareType) {
-        ClickInText_CompareType = clickInText_CompareType;
+        this.clickInText_CompareType = clickInText_CompareType;
     }
 
     public long getClickInText_Index() {
-        return ClickInText_Index;
+        return clickInText_Index;
     }
 
     public void setClickInText_Index(long clickInText_Index) {
-        ClickInText_Index = clickInText_Index;
+        this.clickInText_Index = clickInText_Index;
     }
 
     public String getClickInText_text() {
-        return ClickInText_text;
+        return clickInText_text;
     }
 
     public void setClickInText_text(String clickInText_text) {
-        ClickInText_text = clickInText_text;
+        this.clickInText_text = clickInText_text;
     }
 
     public long getClickInXY_X() {
-        return ClickInXY_X;
+        return clickInXY_X;
     }
 
     public void setClickInXY_X(long clickInXY_X) {
-        ClickInXY_X = clickInXY_X;
+        this.clickInXY_X = clickInXY_X;
     }
 
     public long getClickInXY_Y() {
-        return ClickInXY_Y;
+        return clickInXY_Y;
     }
 
     public void setClickInXY_Y(long clickInXY_Y) {
-        ClickInXY_Y = clickInXY_Y;
+        this.clickInXY_Y = clickInXY_Y;
     }
 
-    public boolean isLogScreen() {
-        return LogScreen;
+    public boolean isLog_screen() {
+        return log_screen;
     }
 
-    public void setLogScreen(boolean logScreen) {
-        LogScreen = logScreen;
+    public void setLog_screen(boolean log_screen) {
+        this.log_screen = log_screen;
     }
 
     @Override
@@ -146,7 +149,7 @@ public class ScreenAutomatorTask extends BaseTask {
                 jo.optString(TAG_CLICK_IN_TEXT_TEXT,DEFAULT_CLICK_IN_TEXT_TEXT),
                 jo.optLong(TAG_CLICK_IN_XY_X,DEFAULT_CLICK_IN_XY_X),
                 jo.optLong(TAG_CLICK_IN_XY_Y,DEFAULT_CLICK_IN_XY_Y),
-                jo.optBoolean(TAG_LOGSCREEN,DEFAULT_LOGSCREEN)
+                jo.optBoolean(TAG_LOG_SCREEN,DEFAULT_LOG_SCREEN)
 
                 );
     }
