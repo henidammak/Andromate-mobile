@@ -7,6 +7,9 @@ import java.util.List;
 
 public class CompositeTask extends PipelineTask{
 
+
+    public final static String COMPOSITE_JSON_TAG_NAME = "CompositeTask" ;
+
     List<PipelineTask> taskList = null;
 
     public CompositeTask() {

@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 public class ScreenAutomatorTask extends BaseTask {
 
+    public final static String JSON_TAG_NAME = "Screen Automator";
+
     public final static String TAG_ACTION_TYPE= "Action_type";
     public final static String TAG_GLOBAL_ACTION_TYPE= "GlobalAction_type";
     public final static String TAG_CLICK_IN_TEXT_SELECTOR= "ClickInText_textSelector";
@@ -28,6 +30,8 @@ public class ScreenAutomatorTask extends BaseTask {
     public final static long DEFAULT_CLICK_IN_XY_X= 0;
     public final static long DEFAULT_CLICK_IN_XY_Y= 0;
     public final static boolean DEFAULT_LOG_SCREEN= false;
+
+
 
     private String action_type;
     private long globalAction_type;

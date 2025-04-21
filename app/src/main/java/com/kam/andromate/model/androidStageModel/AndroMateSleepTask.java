@@ -12,6 +12,8 @@ public class AndroMateSleepTask extends AndroidTask {
 
     public final static long DEFAULT_TIME_SLEEP = 0 ;
 
+    public final static String JSON_TAG_NAME = "Sleep" ;
+
 
     private long timeSleep;
 

@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 public class AndroMateIntentTask extends AndroidTask {
 
+    public final static String JSON_TAG_NAME = "Intent";
+
     public final static String TAG_INTENT_ACTION = "Action";
     public final static String TAG_INTENT_PACKAGE_NAME = "PackageName";
     public final static String TAG_INTENT_CLASS_NAME = "ClassName";
