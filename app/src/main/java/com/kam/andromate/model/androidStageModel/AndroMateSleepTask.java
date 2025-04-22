@@ -1,5 +1,7 @@
 package com.kam.andromate.model.androidStageModel;
 
+import androidx.annotation.NonNull;
+
 import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
 
@@ -17,11 +19,14 @@ public class AndroMateSleepTask extends AndroidTask {
 
     private long timeSleep;
 
-    public AndroMateSleepTask(long timeSleep) {
+    public AndroMateSleepTask(String id, String title, long timeSleep) {
+        super(id, title);
         this.timeSleep = timeSleep;
     }
 
     public AndroMateSleepTask(JSONObject jo) {
+        super(jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE));
         this.timeSleep = jo.optLong(TAG_TIME_SLEEP,DEFAULT_TIME_SLEEP);
     }
 
@@ -36,6 +41,8 @@ public class AndroMateSleepTask extends AndroidTask {
     @Override
     public PipelineTask jsonToPipeLine(JSONObject jo) {
         return new AndroMateSleepTask(
+                jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE),
                 jo.optLong(TAG_TIME_SLEEP,DEFAULT_TIME_SLEEP)
         );
     }
@@ -43,5 +50,13 @@ public class AndroMateSleepTask extends AndroidTask {
     @Override
     public void executeTask() {
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "["+super.toString()+"  AndroMateSleepTask{" +
+                "timeSleep=" + timeSleep +
+                '}'+"]";
     }
 }

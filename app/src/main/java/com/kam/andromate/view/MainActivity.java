@@ -13,17 +13,27 @@ import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketClient;
+import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketInterface;
+import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketObserver;
+import com.kam.andromate.model.factory.AndroMateFactory;
 import com.kam.andromate.singletons.AndroMateApp;
 import com.kam.andromate.singletons.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 import com.kam.andromate.utils.AppUtils;
+
+import org.json.JSONObject;
+
+import okhttp3.Response;
+import okhttp3.WebSocket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,12 +48,17 @@ public class MainActivity extends AppCompatActivity {
     ImageButton execButton = null;
     ToggleButton ctsButton = null;
     ToggleButton controlLineRts = null;
+    ToggleButton cnxButton = null;
+
+    WebSocketClient webSocketClient = null;
+
 
     private void initView() {
         mainReportSection = new MainReportSection(findViewById(R.id.androidMateReportSectionId));
         execButton = findViewById(R.id.send_btn);
         ctsButton = findViewById(R.id.controlLineCts);
         controlLineRts = findViewById(R.id.controlLineRts);
+        cnxButton = findViewById(R.id.cnxButtonId);
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
@@ -107,10 +122,45 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (controlLineRts != null) {
-            controlLineRts.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AppUtils.rebootApp(getApplicationContext());
+            controlLineRts.setOnClickListener(view -> AppUtils.rebootApp(getApplicationContext()));
+        }
+        if (cnxButton != null) {
+            cnxButton.setOnClickListener(view -> {
+                if (webSocketClient == null) {
+                    mainReportSection.appendFmvKey("open connection ", IConstants.WEB_SOCKET_DEFAULT_IP);
+                    webSocketClient = new WebSocketClient(IConstants.WEB_SOCKET_DEFAULT_IP, new WebSocketObserver(new WebSocketInterface() {
+                        @Override
+                        public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
+                            mainReportSection.info("connection success to "+IConstants.WEB_SOCKET_DEFAULT_IP+ " response "+response);
+                        }
+
+                        @Override
+                        public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+                            mainReportSection.errorMsg("connection closed"+IConstants.WEB_SOCKET_DEFAULT_IP);
+                        }
+
+                        @Override
+                        public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
+                            mainReportSection.errorMsg("connection failed "+t+" response "+response);
+                        }
+
+                        @Override
+                        public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
+                            mainReportSection.appendFmvKey("message received ", text);
+                            try {
+                                JSONObject jo = new JSONObject(text);
+                                AndroMateFactory.createPipeLineFromJson(jo);
+                            } catch (Throwable e) {
+                                Log.e(TAG,"exception jo"+e);
+                            }
+                        }
+                    }));
+                    webSocketClient.startWebSocketObserver();
                 }
             });
         }
@@ -138,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver();
+        if (webSocketClient != null) {
+            webSocketClient.close();
+        }
         super.onDestroy();
     }
 

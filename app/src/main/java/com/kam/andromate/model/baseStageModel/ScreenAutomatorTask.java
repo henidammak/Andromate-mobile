@@ -43,10 +43,11 @@ public class ScreenAutomatorTask extends BaseTask {
     private long clickInXY_Y;
     private boolean log_screen;
 
-    public ScreenAutomatorTask(String action_type, long globalAction_type,
+    public ScreenAutomatorTask(String id, String title, String action_type, long globalAction_type,
                                String clickInText_textSelector, String clickInText_CompareType,
                                long clickInText_Index, String clickInText_text, long clickInXY_X,
                                long clickInXY_Y, boolean log_screen) {
+        super(id, title);
         this.action_type = action_type;
         this.globalAction_type = globalAction_type;
         this.clickInText_textSelector = clickInText_textSelector;
@@ -59,6 +60,8 @@ public class ScreenAutomatorTask extends BaseTask {
     }
 
     public ScreenAutomatorTask(JSONObject jo) {
+        super(jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE));
         this.action_type = jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE);
         this.globalAction_type = jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE);
         this.clickInText_textSelector = jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR);
@@ -145,6 +148,8 @@ public class ScreenAutomatorTask extends BaseTask {
     @Override
     public PipelineTask jsonToPipeLine(JSONObject jo) {
         return new ScreenAutomatorTask(
+                jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE),
                 jo.optString(TAG_ACTION_TYPE,DEFAULT_ACTION_TYPE),
                 jo.optLong(TAG_GLOBAL_ACTION_TYPE,DEFAULT_GLOBAL_ACTION_TYPE),
                 jo.optString(TAG_CLICK_IN_TEXT_SELECTOR,DEFAULT_CLICK_IN_TEXT_SELECTOR),

@@ -21,12 +21,15 @@ public class AndroMateCmdTask extends BaseTask {
     private String cmdText;
     private boolean cmdRoot;
 
-    public AndroMateCmdTask(String cmdText, boolean cmdRoot) {
+    public AndroMateCmdTask(String id, String title, String cmdText, boolean cmdRoot) {
+        super(id, title);
         this.cmdText = cmdText;
         this.cmdRoot = cmdRoot;
     }
 
     public AndroMateCmdTask(JSONObject jo) {
+        super(jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE));
         this.cmdText = jo.optString(TAG_CMD_TEXT, DEFAULT_CMD_TEXT);
         this.cmdRoot = jo.optBoolean(TAG_CMD_ROOT,DEFAULT_CMD_ROOT);
     }
@@ -51,6 +54,8 @@ public class AndroMateCmdTask extends BaseTask {
     @Override
     public PipelineTask jsonToPipeLine(JSONObject jo) {
         return new AndroMateCmdTask(
+                jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE),
                 jo.optString(TAG_CMD_TEXT, DEFAULT_CMD_TEXT),
                 jo.optBoolean(TAG_CMD_ROOT,DEFAULT_CMD_ROOT)
         );
@@ -60,4 +65,6 @@ public class AndroMateCmdTask extends BaseTask {
     public void executeTask() {
 
     }
+
+
 }

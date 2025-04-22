@@ -12,7 +12,8 @@ public class CompositeTask extends PipelineTask{
 
     List<PipelineTask> taskList = null;
 
-    public CompositeTask() {
+    public CompositeTask(String id, String title) {
+        super(id, title);
         this.taskList = new ArrayList<>();
     }
 

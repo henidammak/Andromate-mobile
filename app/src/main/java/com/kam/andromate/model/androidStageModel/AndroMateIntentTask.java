@@ -33,8 +33,9 @@ public class AndroMateIntentTask extends AndroidTask {
     private String intentData;
     private String intentActionType;
 
-    public AndroMateIntentTask(String intentAction, String intentPackageName, String intentClassName,
+    public AndroMateIntentTask(String id, String title, String intentAction, String intentPackageName, String intentClassName,
                                 String intentData, String intentActionType) {
+        super(id, title);
         this.intentAction = intentAction;
         this.intentPackageName = intentPackageName;
         this.intentClassName = intentClassName;
@@ -43,6 +44,8 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
     public AndroMateIntentTask(JSONObject jo) {
+        super(jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE));
         this.intentAction = jo.optString(TAG_INTENT_ACTION, DEFAULT_INTENT_ACTION);
         this.intentPackageName = jo.optString(TAG_INTENT_PACKAGE_NAME, DEFAULT_INTENT_PACKAGE_NAME);
         this.intentClassName = jo.optString(TAG_INTENT_CLASS_NAME, DEFAULT_INTENT_CLASS_NAME);
@@ -93,6 +96,8 @@ public class AndroMateIntentTask extends AndroidTask {
     @Override
     public PipelineTask jsonToPipeLine(JSONObject jo) {
         return new AndroMateIntentTask(
+                jo.optString(PipelineTask.TAG_ID, PipelineTask.DEFAULT_ID),
+                jo.optString(PipelineTask.TAG_TITLE, PipelineTask.DEFAULT_TITLE),
                 jo.optString(TAG_INTENT_ACTION, DEFAULT_INTENT_ACTION),
                 jo.optString(TAG_INTENT_PACKAGE_NAME, DEFAULT_INTENT_PACKAGE_NAME),
                 jo.optString(TAG_INTENT_CLASS_NAME, DEFAULT_INTENT_CLASS_NAME),
