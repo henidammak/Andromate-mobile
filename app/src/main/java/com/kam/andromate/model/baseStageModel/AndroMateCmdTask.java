@@ -14,7 +14,6 @@ public class AndroMateCmdTask extends BaseTask {
 
     public final static String DEFAULT_CMD_TEXT = IConstants.EMPTY_STRING;
     public final static boolean DEFAULT_CMD_ROOT = false;
-
     public final static String JSON_TAG_NAME = "Cmd Stage" ;
 
 
@@ -64,6 +63,13 @@ public class AndroMateCmdTask extends BaseTask {
     @Override
     public void executeTask() {
 
+    }
+
+    public String toString() {
+        return "["+super.toString()+"  AndroMateCmdTask{" +
+                "cmdText='" + cmdText + '\'' +
+                ",cmdRoot='" + cmdRoot + '\'' +
+                '}'+"]";
     }
 
 

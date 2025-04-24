@@ -20,9 +20,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketClient;
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketInterface;
-import com.kam.andromate.MessagingController.AndromateWebSocket.WebSocketObserver;
+
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketClient;
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterface;
+import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
 import com.kam.andromate.model.factory.AndroMateFactory;
 import com.kam.andromate.singletons.AndroMateApp;
 import com.kam.andromate.singletons.AndroMateDevice;
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
+                            Log.i("my_tag","exception "+t);
                             mainReportSection.errorMsg("connection failed "+t+" response "+response);
                         }
 

@@ -3,7 +3,10 @@ package com.kam.andromate.model.factory;
 import android.util.Log;
 
 import com.kam.andromate.model.CompositeTask;
+import com.kam.andromate.model.EndTask;
+import com.kam.andromate.model.Link;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.StartTask;
 import com.kam.andromate.model.androidStageModel.AndroMateIntentTask;
 import com.kam.andromate.model.androidStageModel.AndroMateSleepTask;
 import com.kam.andromate.model.baseStageModel.AndroMateCmdTask;
@@ -17,14 +20,11 @@ public class AndroMateFactory {
 
     private final static String TAG = "AndroMateFactory";
 
-    private final static String START_NODE_NAME = "Start";
-    private final static String END_NODE_NAME = "End";
-    private final static String LINK_NODE_NAME = "Links";
-
 
 
     public static PipelineTask createPipeLineFromJson(JSONObject jo) throws JSONException {
         CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));
+        Log.i(TAG,"compositeTask "+compositeTask);
         if (jo != null) {
             JSONArray tags = jo.names();
             if (tags != null) {
@@ -33,18 +33,40 @@ public class AndroMateFactory {
                     currentTag = tags.getString(tagIndex);
                     Log.i(TAG, "current tag received + "+currentTag);
                     switch (currentTag) {
-                        case START_NODE_NAME:
-                            // set the param of composite task !!! as_thread_tag, timeout ...
+                        case StartTask.JSON_TAG_NAME:
+                            JSONArray startArray = jo.optJSONArray(StartTask.JSON_TAG_NAME);
+                            Log.i(TAG,"startArray "+startArray);
+                            for (int i = 0; i < startArray.length(); i++) {
+                                JSONObject startObj = startArray.getJSONObject(i);
+                                StartTask startTask = new StartTask(startObj);
+                                Log.i(TAG,"startTask "+startTask);
+                                compositeTask.addTask(startTask);
+                                Log.i(TAG,"taskList "+compositeTask.getTaskList());
+
+                            }
                             break;
 
-                        case END_NODE_NAME:
+
+                        case EndTask.JSON_TAG_NAME:
+                            JSONArray endArray = jo.optJSONArray(EndTask.JSON_TAG_NAME);
+                            for (int i = 0; i < endArray.length(); i++) {
+                                JSONObject endObj = endArray.getJSONObject(i);
+                                EndTask endTask = new EndTask(endObj);
+                                Log.i(TAG,"endTask "+endTask);
+                                compositeTask.addTask(endTask);
+                                Log.i(TAG,"taskList "+compositeTask.getTaskList());
+
+                            }
                             break;
 
-                        case LINK_NODE_NAME:
-                            JSONArray linkArray = jo.optJSONArray(LINK_NODE_NAME);
+                        case Link.JSON_TAG_NAME:
+                            JSONArray linkArray = jo.optJSONArray(Link.JSON_TAG_NAME);
                             for (int i = 0; i < linkArray.length(); i++) {
                                 JSONObject linkObj = linkArray.getJSONObject(i);
-                                Log.i(TAG,"linkObj "+linkObj);
+                                String from = linkObj.optString(Link.TAG_FROM,Link.DEFAULT_FROM );
+                                String to = linkObj.optString(Link.TAG_TO, Link.DEFAULT_TO);
+                                compositeTask.addLink(new Link(from, to));
+                                Log.i(TAG,"taskList "+compositeTask.getLinks());
                             }
                             break;
 
@@ -66,8 +88,9 @@ public class AndroMateFactory {
                                     for (int i = 0; i < sleepArray.length(); i++) {
                                         JSONObject sleepObj = sleepArray.getJSONObject(i);
                                         AndroMateSleepTask sleepTask = new AndroMateSleepTask(sleepObj);
-                                        Log.i(TAG," sleepTask "+sleepTask);
+                                        Log.i(TAG,"sleepTask "+sleepTask);
                                         compositeTask.addTask(sleepTask);
+                                        Log.i(TAG,"taskList "+compositeTask.getTaskList());
                                     }
                                 }
                             } catch (Throwable t) {
@@ -81,7 +104,9 @@ public class AndroMateFactory {
                                 for (int i = 0; i < cmdArray.length(); i++) {
                                     JSONObject cmdObj = cmdArray.getJSONObject(i);
                                     AndroMateCmdTask cmdTask = new AndroMateCmdTask(cmdObj);
+                                    Log.i(TAG,"cmdTask "+cmdTask);
                                     compositeTask.addTask(cmdTask);
+                                    Log.i(TAG,"taskList "+compositeTask.getTaskList());
                                 }
                             }
                             break;
