@@ -20,6 +20,14 @@ public abstract class PipelineTask {
 
     abstract public PipelineTask jsonToPipeLine(JSONObject jo);
 
+    public String getIdTask() {
+        return idTask;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
     abstract public void executeTask();
 
 

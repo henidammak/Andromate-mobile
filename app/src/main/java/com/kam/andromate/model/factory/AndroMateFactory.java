@@ -3,10 +3,8 @@ package com.kam.andromate.model.factory;
 import android.util.Log;
 
 import com.kam.andromate.model.CompositeTask;
-import com.kam.andromate.model.EndTask;
 import com.kam.andromate.model.Link;
 import com.kam.andromate.model.PipelineTask;
-import com.kam.andromate.model.StartTask;
 import com.kam.andromate.model.androidStageModel.AndroMateIntentTask;
 import com.kam.andromate.model.androidStageModel.AndroMateSleepTask;
 import com.kam.andromate.model.baseStageModel.AndroMateCmdTask;
@@ -20,10 +18,17 @@ public class AndroMateFactory {
 
     private final static String TAG = "AndroMateFactory";
 
+    public final static String START_JSON_TAG_NAME = "Start";
+
+    public final static String END_JSON_TAG_NAME = "End";
+
+
 
 
     public static PipelineTask createPipeLineFromJson(JSONObject jo) throws JSONException {
-        CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));
+        CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE),
+                jo.optBoolean(CompositeTask.TAG_AS_THREAD), jo.optLong(CompositeTask.TAG_TIMEOUT_MS),
+                jo.optBoolean(CompositeTask.TAG_SEQUENTIAL_EXEC));
         Log.i(TAG,"compositeTask "+compositeTask);
         if (jo != null) {
             JSONArray tags = jo.names();
@@ -33,30 +38,22 @@ public class AndroMateFactory {
                     currentTag = tags.getString(tagIndex);
                     Log.i(TAG, "current tag received + "+currentTag);
                     switch (currentTag) {
-                        case StartTask.JSON_TAG_NAME:
-                            JSONArray startArray = jo.optJSONArray(StartTask.JSON_TAG_NAME);
+                        case START_JSON_TAG_NAME:
+                            JSONArray startArray = jo.optJSONArray(START_JSON_TAG_NAME);
                             Log.i(TAG,"startArray "+startArray);
                             for (int i = 0; i < startArray.length(); i++) {
                                 JSONObject startObj = startArray.getJSONObject(i);
-                                StartTask startTask = new StartTask(startObj);
-                                Log.i(TAG,"startTask "+startTask);
-                                compositeTask.addTask(startTask);
-                                Log.i(TAG,"taskList "+compositeTask.getTaskList());
-
+                                compositeTask.setAsThread(startObj.optBoolean(CompositeTask.TAG_AS_THREAD, CompositeTask.DEFAULT_AS_THREAD));
+                                compositeTask.setTimeout(startObj.optLong(CompositeTask.TAG_TIMEOUT_MS, CompositeTask.DEFAULT_TAG_TIMEOUT_MS));
+                                compositeTask.setSequentialExec(startObj.optBoolean(CompositeTask.TAG_SEQUENTIAL_EXEC, CompositeTask.DEFAULT_SEQUENTIAL_EXEC));
+                                Log.i(TAG, "Set start config: AsThread=" + compositeTask.isAsThread() +
+                                        ", Timeout=" + compositeTask.getTimeout() +
+                                        ", SequentialExec=" + compositeTask.isSequentialExec());
                             }
                             break;
 
 
-                        case EndTask.JSON_TAG_NAME:
-                            JSONArray endArray = jo.optJSONArray(EndTask.JSON_TAG_NAME);
-                            for (int i = 0; i < endArray.length(); i++) {
-                                JSONObject endObj = endArray.getJSONObject(i);
-                                EndTask endTask = new EndTask(endObj);
-                                Log.i(TAG,"endTask "+endTask);
-                                compositeTask.addTask(endTask);
-                                Log.i(TAG,"taskList "+compositeTask.getTaskList());
-
-                            }
+                        case END_JSON_TAG_NAME:
                             break;
 
                         case Link.JSON_TAG_NAME:
@@ -136,7 +133,12 @@ public class AndroMateFactory {
                 }
             }
         }
+
+
+        compositeTask.sort();
+        Log.i(TAG,"compositeTask "+compositeTask);
         return compositeTask;
+
     }
 
 }
