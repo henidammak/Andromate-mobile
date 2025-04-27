@@ -167,4 +167,19 @@ public class ScreenAutomatorTask extends BaseTask {
     public void executeTask() {
 
     }
+
+    @Override
+    public String toString() {
+        return "ScreenAutomatorTask{" +
+                "action_type='" + action_type + '\'' +
+                ", globalAction_type=" + globalAction_type +
+                ", clickInText_textSelector='" + clickInText_textSelector + '\'' +
+                ", clickInText_CompareType='" + clickInText_CompareType + '\'' +
+                ", clickInText_Index=" + clickInText_Index +
+                ", clickInText_text='" + clickInText_text + '\'' +
+                ", clickInXY_X=" + clickInXY_X +
+                ", clickInXY_Y=" + clickInXY_Y +
+                ", log_screen=" + log_screen +
+                '}';
+    }
 }

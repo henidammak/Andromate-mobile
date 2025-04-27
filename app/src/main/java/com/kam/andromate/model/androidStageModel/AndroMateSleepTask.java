@@ -55,8 +55,8 @@ public class AndroMateSleepTask extends AndroidTask {
     @NonNull
     @Override
     public String toString() {
-        return "["+super.toString()+"  AndroMateSleepTask{" +
+        return "AndroMateSleepTask{" +
                 "timeSleep=" + timeSleep +
-                '}'+"]";
+                '}';
     }
 }

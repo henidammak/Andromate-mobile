@@ -66,10 +66,10 @@ public class AndroMateCmdTask extends BaseTask {
     }
 
     public String toString() {
-        return "["+super.toString()+"  AndroMateCmdTask{" +
+        return "AndroMateCmdTask{" +
                 "cmdText='" + cmdText + '\'' +
                 ",cmdRoot='" + cmdRoot + '\'' +
-                '}'+"]";
+                '}';
     }
 
 

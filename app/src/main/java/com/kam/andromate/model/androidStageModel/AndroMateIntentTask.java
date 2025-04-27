@@ -112,4 +112,14 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
 
+    @Override
+    public String toString() {
+        return "AndroMateIntentTask{" +
+                "intentAction='" + intentAction + '\'' +
+                ", intentPackageName='" + intentPackageName + '\'' +
+                ", intentClassName='" + intentClassName + '\'' +
+                ", intentData='" + intentData + '\'' +
+                ", intentActionType='" + intentActionType + '\'' +
+                '}';
+    }
 }
