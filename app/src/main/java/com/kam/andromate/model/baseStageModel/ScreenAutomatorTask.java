@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 public class ScreenAutomatorTask extends BaseTask {
 
-    public final static String JSON_TAG_NAME = "Screen Automator";
+    public final static String JSON_TAG_NAME = "ScreenAutomator";
 
     public final static String TAG_ACTION_TYPE= "Action_type";
     public final static String TAG_GLOBAL_ACTION_TYPE= "GlobalAction_type";

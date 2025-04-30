@@ -169,7 +169,7 @@ public class CompositeTask extends PipelineTask{
                 ", timeout_ms=" + timeout_ms +
                 ", sequentialExec=" + sequentialExec +
                 ", taskList=" + taskList +
-                ", links=" + links +
+
                 ", idTask='" + idTask + '\'' +
                 ", title='" + title + '\'' +
                 '}';
