@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 public class ScreenAutomatorTask extends BaseTask {
 
-    public final static String JSON_TAG_NAME = "Screen Automator";
+    public final static String JSON_TAG_NAME = "ScreenAutomator";
 
     public final static String TAG_ACTION_TYPE= "Action_type";
     public final static String TAG_GLOBAL_ACTION_TYPE= "GlobalAction_type";
@@ -166,5 +166,20 @@ public class ScreenAutomatorTask extends BaseTask {
     @Override
     public void executeTask() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "ScreenAutomatorTask{" +
+                "action_type='" + action_type + '\'' +
+                ", globalAction_type=" + globalAction_type +
+                ", clickInText_textSelector='" + clickInText_textSelector + '\'' +
+                ", clickInText_CompareType='" + clickInText_CompareType + '\'' +
+                ", clickInText_Index=" + clickInText_Index +
+                ", clickInText_text='" + clickInText_text + '\'' +
+                ", clickInXY_X=" + clickInXY_X +
+                ", clickInXY_Y=" + clickInXY_Y +
+                ", log_screen=" + log_screen +
+                '}';
     }
 }

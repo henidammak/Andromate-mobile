@@ -30,13 +30,11 @@ public class CompositeTask extends PipelineTask{
     private List<PipelineTask> taskList ;
     private List<Link> links ;
 
-    public CompositeTask(String idTask, String title, boolean asThread, long timeout_ms, boolean sequentialExec) {
+    public CompositeTask(String idTask, String title) {
         super(idTask, title);
-        this.asThread = asThread;
-        this.timeout_ms = timeout_ms;
-        this.sequentialExec = sequentialExec;
         this.taskList = new ArrayList<>();
         this.links = new ArrayList<>();
+
     }
 
     public CompositeTask(JSONObject jo) {
@@ -109,60 +107,55 @@ public class CompositeTask extends PipelineTask{
     }
 
     public void sort() {
-        List<PipelineTask> sortedList = new ArrayList<>();
-        Map<String, PipelineTask> taskMap = new HashMap<>();
+        if (taskList.isEmpty() || links.isEmpty()) {
+            return;
+        }
 
-        // Indexer les tâches par id
+        Map<String, PipelineTask> taskMap = new HashMap<>();
         for (PipelineTask task : taskList) {
             taskMap.put(task.getIdTask(), task);
         }
 
-        // Construire un graphe des dépendances
-        Map<String, List<String>> graph = new HashMap<>();
-        Map<String, Integer> inDegree = new HashMap<>();
-
-        // Initialiser inDegree
-        for (PipelineTask task : taskList) {
-            inDegree.put(task.getIdTask(), 0);
-            graph.put(task.getIdTask(), new ArrayList<>());
-        }
-
-        // Ajouter les arêtes
+        Map<String, String> linkMap = new HashMap<>();
         for (Link link : links) {
-            String from = link.getFrom();
-            String to = link.getTo();
-            graph.get(from).add(to);
-            inDegree.put(to, inDegree.get(to) + 1);
+            linkMap.put(link.getFrom(), link.getTo());
         }
 
-        // Tri topologique (Kahn’s algorithm)
-        Queue<String> queue = new LinkedList<>();
-        for (String id : inDegree.keySet()) {
-            if (inDegree.get(id) == 0) {
-                queue.add(id);
-            }
-        }
 
-        while (!queue.isEmpty()) {
-            String currentId = queue.poll();
-            PipelineTask currentTask = taskMap.get(currentId);
-            if (currentTask != null) {
-                sortedList.add(currentTask);
-            }
-
-            for (String neighbor : graph.get(currentId)) {
-                inDegree.put(neighbor, inDegree.get(neighbor) - 1);
-                if (inDegree.get(neighbor) == 0) {
-                    queue.add(neighbor);
+        String startId = null;
+        for (String fromId : linkMap.keySet()) {
+            boolean isStart = true;
+            for (Link link : links) {
+                if (link.getTo().equals(fromId)) {
+                    isStart = false;
+                    break;
                 }
             }
+            if (isStart) {
+                startId = fromId;
+                break;
+            }
         }
 
-        // Mettre à jour la taskList triée
-        setTaskList(sortedList);
+        if (startId == null) {
 
+            return;
+        }
 
+        List<PipelineTask> sortedTasks = new ArrayList<>();
+        String currentId = startId;
+
+        while (currentId != null) {
+            PipelineTask currentTask = taskMap.get(currentId);
+            if (currentTask != null) {
+                sortedTasks.add(currentTask);
+            }
+            currentId = linkMap.get(currentId);
+        }
+
+        this.taskList = sortedTasks;
     }
+
 
 
 
@@ -176,7 +169,7 @@ public class CompositeTask extends PipelineTask{
                 ", timeout_ms=" + timeout_ms +
                 ", sequentialExec=" + sequentialExec +
                 ", taskList=" + taskList +
-                ", links=" + links +
+
                 ", idTask='" + idTask + '\'' +
                 ", title='" + title + '\'' +
                 '}';

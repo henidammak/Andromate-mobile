@@ -26,9 +26,7 @@ public class AndroMateFactory {
 
 
     public static PipelineTask createPipeLineFromJson(JSONObject jo) throws JSONException {
-        CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE),
-                jo.optBoolean(CompositeTask.TAG_AS_THREAD), jo.optLong(CompositeTask.TAG_TIMEOUT_MS),
-                jo.optBoolean(CompositeTask.TAG_SEQUENTIAL_EXEC));
+        CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));
         Log.i(TAG,"compositeTask "+compositeTask);
         if (jo != null) {
             JSONArray tags = jo.names();
@@ -133,10 +131,9 @@ public class AndroMateFactory {
                 }
             }
         }
-
-
+        Log.i(TAG,"compositeTask before sort "+compositeTask);
         compositeTask.sort();
-        Log.i(TAG,"compositeTask "+compositeTask);
+        Log.i(TAG,"compositeTask after sort "+compositeTask);
         return compositeTask;
 
     }
