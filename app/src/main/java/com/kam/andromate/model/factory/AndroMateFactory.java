@@ -22,13 +22,11 @@ public class AndroMateFactory {
 
     public final static String END_JSON_TAG_NAME = "End";
 
-
-
-
     public static PipelineTask createPipeLineFromJson(JSONObject jo) throws JSONException {
-        CompositeTask compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));
-        Log.i(TAG,"compositeTask "+compositeTask);
+        CompositeTask compositeTask = null;
         if (jo != null) {
+            compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));
+            Log.i(TAG,"compositeTask "+compositeTask);
             JSONArray tags = jo.names();
             if (tags != null) {
                 String currentTag = null;
@@ -132,7 +130,8 @@ public class AndroMateFactory {
             }
         }
         Log.i(TAG,"compositeTask before sort "+compositeTask);
-        compositeTask.sort();
+        if (compositeTask != null)
+            compositeTask.sort();
         Log.i(TAG,"compositeTask after sort "+compositeTask);
         return compositeTask;
 

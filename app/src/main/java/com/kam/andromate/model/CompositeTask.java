@@ -2,6 +2,8 @@ package com.kam.andromate.model;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -107,61 +109,46 @@ public class CompositeTask extends PipelineTask{
     }
 
     public void sort() {
-        if (taskList.isEmpty() || links.isEmpty()) {
-            return;
-        }
-
-        Map<String, PipelineTask> taskMap = new HashMap<>();
-        for (PipelineTask task : taskList) {
-            taskMap.put(task.getIdTask(), task);
-        }
-
-        Map<String, String> linkMap = new HashMap<>();
-        for (Link link : links) {
-            linkMap.put(link.getFrom(), link.getTo());
-        }
-
-
-        String startId = null;
-        for (String fromId : linkMap.keySet()) {
-            boolean isStart = true;
+        if (!taskList.isEmpty() && !links.isEmpty()) {
+            Map<String, PipelineTask> taskMap = new HashMap<>();
+            for (PipelineTask task : taskList) {
+                taskMap.put(task.getIdTask(), task);
+            }
+            Map<String, String> linkMap = new HashMap<>();
             for (Link link : links) {
-                if (link.getTo().equals(fromId)) {
-                    isStart = false;
+                linkMap.put(link.getFrom(), link.getTo());
+            }
+            String startId = null;
+            for (String fromId : linkMap.keySet()) {
+                boolean isStart = true;
+                for (Link link : links) {
+                    if (link.getTo().equals(fromId)) {
+                        isStart = false;
+                        break;
+                    }
+                }
+                if (isStart) {
+                    startId = fromId;
                     break;
                 }
             }
-            if (isStart) {
-                startId = fromId;
-                break;
+            if (startId != null) {
+                List<PipelineTask> sortedTasks = new ArrayList<>();
+                String currentId = startId;
+                while (currentId != null) {
+                    PipelineTask currentTask = taskMap.get(currentId);
+                    if (currentTask != null) {
+                        sortedTasks.add(currentTask);
+                    }
+                    currentId = linkMap.get(currentId);
+                }
+                this.taskList = sortedTasks;
             }
         }
-
-        if (startId == null) {
-
-            return;
-        }
-
-        List<PipelineTask> sortedTasks = new ArrayList<>();
-        String currentId = startId;
-
-        while (currentId != null) {
-            PipelineTask currentTask = taskMap.get(currentId);
-            if (currentTask != null) {
-                sortedTasks.add(currentTask);
-            }
-            currentId = linkMap.get(currentId);
-        }
-
-        this.taskList = sortedTasks;
     }
 
 
-
-
-
-
-
+    @NonNull
     @Override
     public String toString() {
         return "CompositeTask{" +

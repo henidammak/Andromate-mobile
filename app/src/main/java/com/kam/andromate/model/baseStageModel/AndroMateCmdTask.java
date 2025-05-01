@@ -1,5 +1,7 @@
 package com.kam.andromate.model.baseStageModel;
 
+import androidx.annotation.NonNull;
+
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
@@ -65,6 +67,8 @@ public class AndroMateCmdTask extends BaseTask {
 
     }
 
+    @NonNull
+    @Override
     public String toString() {
         return "AndroMateCmdTask{" +
                 "cmdText='" + cmdText + '\'' +
