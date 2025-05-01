@@ -53,13 +53,13 @@
             android:textOn="CNX" />
 
         <ToggleButton
-            android:id="@+id/controlLineDsr"
+            android:id="@+id/startButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
             android:background="@color/white"
-            android:textOff="DSR"
-            android:textOn="DSR" />
+            android:textOff="START"
+            android:textOn="START" />
 
         <View
             android:layout_height="match_parent"

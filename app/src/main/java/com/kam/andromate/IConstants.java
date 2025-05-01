@@ -15,4 +15,9 @@ public interface IConstants {
     String EMPTY_STRING = "";
 
     String APP_RESTART_RECEIVER = "app_restart_receiver";
+
+    int SECONDS_TO_MS = 1000;
+
+    boolean CHECK_DEVICE_AUTHORIZATION = true;
+    String DEFAULT_AUTHORIZATION_URL = "http://192.168.1.36:8000/api/devices/";
 }
