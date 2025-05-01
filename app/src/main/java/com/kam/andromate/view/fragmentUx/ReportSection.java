@@ -1,6 +1,9 @@
 package com.kam.andromate.view.fragmentUx;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ public class ReportSection {
     private static final String RED_COLOR_HTML_CODE   = "<font color='#FF0000'>"+HTML_B_FONT_START;
     private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'>"+HTML_B_FONT_START;
     private static final String BLUE_COLOR_HTML_CODE  = "<font color='#0000A0'>"+HTML_B_FONT_START;
+    private static final Handler UI_THREAD_HANDLER = new Handler(Looper.getMainLooper());
 
 
     TextView terminalView;
@@ -26,6 +30,7 @@ public class ReportSection {
     public ReportSection(TextView terminalView) {
         this.terminalView = terminalView;
         this.terminalView.setMovementMethod(new ScrollingMovementMethod());
+
     }
 
     public void incMargin() {
@@ -36,40 +41,49 @@ public class ReportSection {
         margin = false;
     }
 
+    private void append(String text) {
+        //edit view should be done in ui thread
+        UI_THREAD_HANDLER.post(() -> terminalView.append(text));
+    }
+
+    private void append(Spanned spanned) {
+        UI_THREAD_HANDLER.post(() -> terminalView.append(spanned));
+    }
+
     private String getTimeStampViewFormat() {
         return margin ? TimeUtils.getCurrentTimeAsSimpleFormat() + "-|"
                 : TimeUtils.getCurrentTimeAsSimpleFormat() + "-" ;
     }
 
-    public void appendMsg(String text) {
+    public synchronized void appendMsg(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END
                 + text + BR_END;
-        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+        append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
-    public void appendFmvKey(String key, String text) {
+    public synchronized void appendFmvKey(String key, String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + key+": "
                 + HTML_B_FONT_END + text + BR_END;
-        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+        append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
-    public void info(String text) {
+    public synchronized void info(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
                 GREEN_COLOR_HTML_CODE + text + FONT_HTML_CODE+BR_END;
-        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+        append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
 
-    public void errorMsg(String text) {
+    public synchronized void errorMsg(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
                 RED_COLOR_HTML_CODE +"E-"+ text + FONT_HTML_CODE+BR_END;
-        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+        append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
-    public void appendTitle(String text) {
+    public synchronized void appendTitle(String text) {
         String htmlText = BLACK_COLOR_HTML_CODE + getTimeStampViewFormat() + HTML_B_FONT_END +
                 BLUE_COLOR_HTML_CODE +text + FONT_HTML_CODE+BR_END;
-        terminalView.append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
+        append(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY));
     }
 
     public void clear() {

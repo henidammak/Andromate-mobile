@@ -1,5 +1,9 @@
 package com.kam.andromate.model;
 
+import androidx.annotation.NonNull;
+
+import com.kam.andromate.view.MainReportSection;
+
 import org.json.JSONObject;
 
 public abstract class PipelineTask {
@@ -28,9 +32,10 @@ public abstract class PipelineTask {
         return title;
     }
 
-    abstract public void executeTask();
+    abstract public void executeTask(MainReportSection rs);
 
 
+    @NonNull
     @Override
     public String toString() {
         return "PipelineTask{" +

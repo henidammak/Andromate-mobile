@@ -21,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.kam.andromate.AndromateManager.AndroMateTaskManager;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketClient;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterface;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
@@ -50,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
     ToggleButton ctsButton = null;
     ToggleButton controlLineRts = null;
     ToggleButton cnxButton = null;
+    ToggleButton startButton = null;
 
     WebSocketClient webSocketClient = null;
+
+    AndroMateTaskManager androMateTaskManager = null;
 
 
     private void initView() {
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ctsButton = findViewById(R.id.controlLineCts);
         controlLineRts = findViewById(R.id.controlLineRts);
         cnxButton = findViewById(R.id.cnxButtonId);
+        startButton = findViewById(R.id.startButtonId);
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
@@ -163,6 +168,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }));
                     webSocketClient.startWebSocketObserver();
+                }
+            });
+        }
+        if (startButton != null) {
+            startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    androMateTaskManager = new AndroMateTaskManager(mainReportSection);
+                    androMateTaskManager.start("start task");
                 }
             });
         }

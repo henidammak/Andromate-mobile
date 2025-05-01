@@ -1,17 +1,16 @@
 package com.kam.andromate.model;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 public class CompositeTask extends PipelineTask{
 
@@ -102,9 +101,9 @@ public class CompositeTask extends PipelineTask{
     }
 
     @Override
-    public void executeTask() {
+    public void executeTask(MainReportSection rs) {
         for (PipelineTask task : taskList) {
-            task.executeTask();
+            task.executeTask(rs);
         }
     }
 

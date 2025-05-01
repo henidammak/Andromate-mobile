@@ -22,7 +22,7 @@ public class AndroMateFactory {
 
     public final static String END_JSON_TAG_NAME = "End";
 
-    public static PipelineTask createPipeLineFromJson(JSONObject jo) throws JSONException {
+    public static CompositeTask createPipeLineFromJson(JSONObject jo) throws JSONException {
         CompositeTask compositeTask = null;
         if (jo != null) {
             compositeTask = new CompositeTask(jo.optString(PipelineTask.TAG_ID), jo.optString(PipelineTask.TAG_TITLE));

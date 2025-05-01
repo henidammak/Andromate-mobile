@@ -1,8 +1,12 @@
 package com.kam.andromate.model.androidStageModel;
 
+import androidx.annotation.NonNull;
+
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
+import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
 
@@ -107,11 +111,13 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
     @Override
-    public void executeTask() {
-
+    public void executeTask(MainReportSection rs) {
+        ThreadHelper.deepSleep(IConstants.SECONDS_VALUE);
+        rs.appendFmvKey("intentTask", toString());
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "AndroMateIntentTask{" +

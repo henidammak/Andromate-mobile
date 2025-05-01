@@ -5,7 +5,7 @@ public class ThreadHelper {
     /*
     * sleep timeToSleep (ms)
     * */
-    public void deepSleep(long timeToSleep_ms) {
+    public static void deepSleep(long timeToSleep_ms) {
         long wakeTime = System.currentTimeMillis()+timeToSleep_ms;
         while (System.currentTimeMillis()<wakeTime) {
             try {
