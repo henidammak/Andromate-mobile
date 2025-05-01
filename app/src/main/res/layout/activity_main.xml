@@ -66,13 +66,13 @@
             android:layout_width="6dp" />
 
         <ToggleButton
-            android:id="@+id/controlLineCd"
+            android:id="@+id/stopButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
             android:background="@color/white"
-            android:textOff="CD"
-            android:textOn="CD" />
+            android:textOff="STOP"
+            android:textOn="STOP" />
 
         <ToggleButton
             android:id="@+id/controlLineRi"

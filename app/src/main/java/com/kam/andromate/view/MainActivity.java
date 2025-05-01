@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ToggleButton controlLineRts = null;
     ToggleButton cnxButton = null;
     ToggleButton startButton = null;
+    ToggleButton stopButton = null;
 
     WebSocketClient webSocketClient = null;
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         controlLineRts = findViewById(R.id.controlLineRts);
         cnxButton = findViewById(R.id.cnxButtonId);
         startButton = findViewById(R.id.startButtonId);
+        stopButton = findViewById(R.id.stopButtonId);
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
@@ -172,11 +174,18 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (startButton != null) {
-            startButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            startButton.setOnClickListener(view -> {
+                if (androMateTaskManager == null) {
                     androMateTaskManager = new AndroMateTaskManager(mainReportSection);
                     androMateTaskManager.start("start task");
+                }
+            });
+        }
+        if (stopButton != null) {
+            stopButton.setOnClickListener(view -> {
+                if (androMateTaskManager != null) {
+                    androMateTaskManager.stop("manuel stop");
+                    androMateTaskManager = null;
                 }
             });
         }
