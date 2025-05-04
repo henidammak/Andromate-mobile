@@ -25,6 +25,10 @@ public class CompositeTask extends PipelineTask{
     public static final long DEFAULT_TAG_TIMEOUT_MS= 0;
     public static final boolean DEFAULT_SEQUENTIAL_EXEC = false;
 
+    public String info() {
+        return "timeout="+timeout_ms+"(ms)"+ " asThread="+asThread+")";
+    }
+
     private boolean asThread;
     private long timeout_ms;
     private boolean sequentialExec;
