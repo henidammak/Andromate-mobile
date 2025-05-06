@@ -75,13 +75,13 @@
             android:textOn="STOP" />
 
         <ToggleButton
-            android:id="@+id/controlLineRi"
+            android:id="@+id/testButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
             android:background="@color/white"
-            android:textOff="RI"
-            android:textOn="RI" />
+            android:textOff="TEST"
+            android:textOn="TEST" />
 
     </LinearLayout>
 

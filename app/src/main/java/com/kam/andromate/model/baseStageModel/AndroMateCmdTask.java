@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.utils.ThreadUtils.CmdHelper;
+import com.kam.andromate.utils.ThreadUtils.CmdObserver;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
 
@@ -64,11 +66,32 @@ public class AndroMateCmdTask extends BaseTask {
         );
     }
 
+//    @Override
+//    public void executeTask(MainReportSection rs) {
+//        ThreadHelper.deepSleep(IConstants.SECONDS_VALUE);
+//        rs.appendFmvKey("cmdTask", toString());
+//    }
+
     @Override
     public void executeTask(MainReportSection rs) {
-        ThreadHelper.deepSleep(IConstants.SECONDS_VALUE);
-        rs.appendFmvKey("cmdTask", toString());
+        String result = CmdHelper.executeCommand(cmdText, cmdRoot, new CmdObserver() {
+            @Override
+            public void onCommandSuccess(String resultCmd) {
+                rs.info("Commande exécutée avec succès.");
+                rs.appendFmvKey("Résultat", resultCmd);
+            }
+
+            @Override
+            public void onCommandError(String errorCmd) {
+                rs.errorMsg("Erreur lors de l'exécution de la commande : " + errorCmd);
+            }
+        });
+
+        // Affiche toujours une trace, même si on a déjà loggé dans le callback
+        rs.appendFmvKey("CmdTask", toString() + "\nRésultat brut:\n" + result);
     }
+
+
 
     @NonNull
     @Override

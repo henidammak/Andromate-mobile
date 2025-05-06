@@ -14,11 +14,8 @@ public class AndroMateThread extends Thread{
     * launch thread that will execute runnable interface method
      */
     public static AndroMateThread runInBackground(String name, final Runnable runnable) {
-        AndroMateThread result =new AndroMateThread(name) {
-            public void dorun() {
-                runnable.run();
-            }
-        };
+        AndroMateThread result =new AndroMateThread(name, runnable);
+
         result.start();
         return result;
     }

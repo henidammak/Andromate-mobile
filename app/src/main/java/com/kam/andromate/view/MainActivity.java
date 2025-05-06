@@ -31,6 +31,9 @@ import com.kam.andromate.singletons.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 import com.kam.andromate.utils.AppUtils;
+import com.kam.andromate.utils.ThreadUtils.AndroMateThread;
+import com.kam.andromate.utils.ThreadUtils.CmdHelper;
+import com.kam.andromate.utils.ThreadUtils.CmdObserver;
 
 import org.json.JSONObject;
 
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     ToggleButton cnxButton = null;
     ToggleButton startButton = null;
     ToggleButton stopButton = null;
+    ToggleButton testButton = null;
+
 
     WebSocketClient webSocketClient = null;
 
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         cnxButton = findViewById(R.id.cnxButtonId);
         startButton = findViewById(R.id.startButtonId);
         stopButton = findViewById(R.id.stopButtonId);
+        testButton = findViewById(R.id.testButtonId);
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
@@ -188,6 +194,34 @@ public class MainActivity extends AppCompatActivity {
                     androMateTaskManager = null;
                 }
             });
+        }
+        if (testButton != null) {
+            Log.i("my_tag","not null");
+            testButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AndroMateThread.runInBackground("testThread", new Runnable() {
+                        @Override
+                        public void run() {
+                            CmdHelper.executeCommand("ping -n 4 www.google.com", false, new CmdObserver() {
+                                @Override
+                                public void onCommandSuccess(String resultCmd) {
+                                    mainReportSection.info("success"+resultCmd);
+                                }
+
+                                @Override
+                                public void onCommandError(String errorCmd) {
+                                    mainReportSection.errorMsg("error cmd"+errorCmd);
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            mainReportSection.appendMsg("null value");
+            Log.i("my_tag"," null vaue");
         }
     }
 

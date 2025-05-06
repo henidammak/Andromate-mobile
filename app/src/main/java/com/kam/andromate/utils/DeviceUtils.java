@@ -40,4 +40,30 @@ public class DeviceUtils {
         return Build.MANUFACTURER;
     }
 
+    public static boolean isDeviceRoot() {
+        String[] paths = {
+                "/sbin/su",
+                "/system/bin/su",
+                "/system/xbin/su",
+                "/data/local/xbin/su",
+                "/data/local/bin/su",
+                "/system/sd/xbin/su",
+                "/system/bin/failsafe/su",
+                "/data/local/su"
+        };
+
+        for (String path : paths) {
+            if (new java.io.File(path).exists()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+
 }
