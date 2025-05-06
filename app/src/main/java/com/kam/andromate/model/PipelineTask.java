@@ -32,6 +32,15 @@ public abstract class PipelineTask {
         return title;
     }
 
+    public void execute(MainReportSection rs) {
+        //TODO: Here start recording MainReportSection to get file and save it in db
+        rs.appendTitle("execute task "+title);
+        executeTask(rs);
+        rs.appendTitle("end task "+title);
+        //TODO stop recording and get file and upload it in db
+        //TODO WEB FRONT SHOULD GET THE FILE EXECUTION FOR EACH DEVICE
+    }
+
     abstract public void executeTask(MainReportSection rs);
 
 

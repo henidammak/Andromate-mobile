@@ -14,6 +14,7 @@ import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserve
 import com.kam.andromate.model.CompositeTask;
 import com.kam.andromate.model.factory.AndroMateFactory;
 import com.kam.andromate.utils.ThreadUtils.AndroMateSynchronizer;
+import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
@@ -157,7 +158,14 @@ public class AndroMateTaskManager {
                 break;
             } else {
                 if (compositeTaskSynchronizer.result != null) {
+                    rs.discMargin();
+                    rs.appendFmvKey("Pipeline Tasks received param=",compositeTaskSynchronizer.result.info());
+                    ThreadHelper.deepSleep(5 * IConstants.SECONDS_VALUE);
+                    rs.incMargin();
+                    //TODO: replace executeTask by execute
                     compositeTaskSynchronizer.result.executeTask(rs);
+                    rs.info("end task execution");
+                    rs.discMargin();
                 }
             }
         }

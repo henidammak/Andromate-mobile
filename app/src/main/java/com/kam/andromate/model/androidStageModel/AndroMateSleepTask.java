@@ -52,8 +52,9 @@ public class AndroMateSleepTask extends AndroidTask {
 
     @Override
     public void executeTask(MainReportSection rs) {
-        rs.appendFmvKey("SleepTask", toString());
+        rs.appendFmvKey("Sleep ", " time="+timeSleep);
         ThreadHelper.deepSleep(timeSleep);
+        rs.info("end Sleep");
     }
 
     @NonNull
