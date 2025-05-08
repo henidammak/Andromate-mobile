@@ -2,6 +2,7 @@ package com.kam.andromate.AndromateManager;
 
 
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -56,13 +57,18 @@ public class AndroMateTaskManager {
             });
 
     private final MainReportSection rs;
+    private final Context context;
 
-    public AndroMateTaskManager(MainReportSection reportSection) {
+    public AndroMateTaskManager(Context context, MainReportSection reportSection) {
+        this.context = context;
         this.rs = reportSection;
         this.compositeTaskSynchronizer = new AndroMateSynchronizer<>();
         this.connectionSynchronizer = new AndroMateSynchronizer<>();
     }
 
+    public Context getContext() {
+        return context;
+    }
     public void start(String name) {
         AndroMataTaskExecutor androMateTaskExecutor = new AndroMataTaskExecutor(name);
         androMateTaskExecutor.executeOnExecutor(THREAD_POOL_EXECUTOR, "");
@@ -141,6 +147,9 @@ public class AndroMateTaskManager {
                     rs.errorMsg("cannot connect due to "+connectionSynchronizer.error);
                 } else {
                     rs.info("connection success");
+                    if (webSocketClient != null) {
+                        webSocketClient.sendDeviceIdToBackend();
+                    }
                     rs.appendMsg("start wait for tasks order");
                     waitForTasksAndPerform();
                 }

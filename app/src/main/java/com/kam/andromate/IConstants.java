@@ -7,12 +7,13 @@ public interface IConstants {
 
     boolean SHOW_EXECUTE_BAR = false;
 
-    String WEB_SOCKET_DOMAIN = "192.168.1.82";
+    String WEB_SOCKET_DOMAIN = "192.168.1.118";
 
     int WEB_SOCKET_PORT = 8765;
     String WEB_SOCKET_DEFAULT_IP = "ws://"+WEB_SOCKET_DOMAIN+":"+WEB_SOCKET_PORT; // websocket wifi server
 
     String EMPTY_STRING = "";
+    String DEVICE_ID_TAG = "device_id";
 
     String APP_RESTART_RECEIVER = "app_restart_receiver";
 

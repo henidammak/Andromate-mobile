@@ -1,5 +1,12 @@
 package com.kam.andromate.messagingController.AndromateWebSocket;
 
+import android.content.Context;
+
+import com.kam.andromate.IConstants;
+import com.kam.andromate.singletons.AndroMateDevice;
+
+import org.json.JSONObject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -32,6 +39,18 @@ public class WebSocketClient {
             Request request = new Request.Builder().url(webSocketUrl).build();
             webSocket = client.newWebSocket(request, webSocketObserver);
             client.dispatcher().executorService().shutdown();
+        }
+    }
+
+    public void sendDeviceIdToBackend() {
+        if (webSocket != null && AndroMateDevice.getInstance() != null) {
+            try {
+                JSONObject deviceIdPayload = new JSONObject();
+                deviceIdPayload.put(IConstants.DEVICE_ID_TAG, AndroMateDevice.getInstance().getDeviceId());
+                webSocket.send(deviceIdPayload.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

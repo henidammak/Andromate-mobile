@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         if (startButton != null) {
             startButton.setOnClickListener(view -> {
                 if (androMateTaskManager == null) {
-                    androMateTaskManager = new AndroMateTaskManager(mainReportSection);
+                    androMateTaskManager = new AndroMateTaskManager(this, mainReportSection);
                     androMateTaskManager.start("start task");
                 }
             });
