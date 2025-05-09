@@ -160,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
-                            Log.i("my_tag","exception "+t);
                             mainReportSection.errorMsg("connection failed "+t+" response "+response);
                         }
 
@@ -196,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (testButton != null) {
-            Log.i("my_tag","not null");
             testButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -221,7 +219,6 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             mainReportSection.appendMsg("null value");
-            Log.i("my_tag"," null vaue");
         }
     }
 

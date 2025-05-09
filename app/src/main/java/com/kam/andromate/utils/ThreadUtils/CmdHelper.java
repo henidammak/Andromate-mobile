@@ -33,16 +33,13 @@ public class CmdHelper {
                     new InputStreamReader(process.getInputStream())
             );
             String line;
-            Log.i("my_tag","start command");
             while ((line = reader.readLine()) != null) {
-                Log.i("my_tag","line = "+line);
                 output.append(line).append("\n");
             }
             BufferedReader errorReader = new BufferedReader(
                     new InputStreamReader(process.getErrorStream())
             );
             while ((line = errorReader.readLine()) != null) {
-                Log.i("my_tag","lineError "+line);
                 errorOutput.append(line).append("\n");
             }
             process.waitFor();
