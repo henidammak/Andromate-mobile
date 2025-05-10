@@ -1,7 +1,5 @@
 package com.kam.andromate.utils.ThreadUtils;
 
-import android.util.Log;
-
 import com.kam.andromate.utils.DeviceUtils;
 
 import java.io.BufferedReader;
@@ -9,22 +7,21 @@ import java.io.InputStreamReader;
 
 public class CmdHelper {
 
-    public static String executeCommand(String command, boolean asRoot, CmdObserver cmdObserver) {
+    public static void executeCommand(String command, boolean asRoot, CmdObserver cmdObserver) {
         StringBuilder output = new StringBuilder();
         StringBuilder errorOutput = new StringBuilder();
         Process process = null;
         try {
             if (asRoot) {
-                // Vérifie si l'appareil est rooté avant d'exécuter en root
                 if (DeviceUtils.isDeviceRoot()) {
                     process = Runtime.getRuntime().exec(new String[]{"su", "-c", command});
                 } else {
-                    String error = "L'appareil n'est pas rooté. Impossible d'exécuter la commande en tant que root.";
+                    String error = "Permission Denied (no rooted Device)";
                     output.append(error).append("\n");
                     if (cmdObserver != null) {
                         cmdObserver.onCommandError(error);
                     }
-                    return output.toString();
+                    return;
                 }
             } else {
                 process = Runtime.getRuntime().exec(command);
@@ -63,6 +60,6 @@ public class CmdHelper {
             if (process != null) process.destroy();
         }
 
-        return output.toString();
+        output.toString();
     }
 }
