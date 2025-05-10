@@ -43,7 +43,6 @@ public abstract class PipelineTask {
 
     abstract public void executeTask(MainReportSection rs);
 
-
     @NonNull
     @Override
     public String toString() {

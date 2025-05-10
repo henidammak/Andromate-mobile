@@ -77,7 +77,7 @@ public class AndroMateTaskManager {
     public void stop(String reason) {
         stopConnectToWebSocketClient();
         this.connectionSynchronizer.reset();
-        compositeTaskSynchronizer.reset();
+        this.compositeTaskSynchronizer.reset();
     }
 
 
@@ -168,11 +168,11 @@ public class AndroMateTaskManager {
             } else {
                 if (compositeTaskSynchronizer.result != null) {
                     rs.discMargin();
-                    rs.appendFmvKey("Pipeline Tasks received param=",compositeTaskSynchronizer.result.info());
+                    rs.appendFmvKey("Tasks received: ",compositeTaskSynchronizer.result.info());
                     ThreadHelper.deepSleep(5 * IConstants.SECONDS_VALUE);
                     rs.incMargin();
                     //TODO: replace executeTask by execute
-                    compositeTaskSynchronizer.result.executeTask(rs);
+                    compositeTaskSynchronizer.result.execute(rs);
                     rs.info("end task execution");
                     rs.discMargin();
                 }

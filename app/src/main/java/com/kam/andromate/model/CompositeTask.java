@@ -26,7 +26,7 @@ public class CompositeTask extends PipelineTask{
     public static final boolean DEFAULT_SEQUENTIAL_EXEC = false;
 
     public String info() {
-        return "timeout="+timeout_ms+"(ms)"+ " asThread="+asThread+")";
+        return "Title="+title+"timeout="+timeout_ms+"(ms)"+ " asThread="+asThread+")";
     }
 
     private boolean asThread;

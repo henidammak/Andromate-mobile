@@ -1,5 +1,7 @@
 package com.kam.andromate.model;
 
+import androidx.annotation.NonNull;
+
 import com.kam.andromate.IConstants;
 
 public class Link {
@@ -36,6 +38,7 @@ public class Link {
         this.to = to;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Link{from='" + from + "', to='" + to + "'}";

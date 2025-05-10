@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
-import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
@@ -168,9 +167,18 @@ public class ScreenAutomatorTask extends BaseTask {
     }
 
     @Override
-    public void executeTask(MainReportSection rs) {
-        ThreadHelper.deepSleep(IConstants.SECONDS_VALUE);
-        rs.appendFmvKey("ScreenAutomator", toString());
+    public String getBaseTaskStartMsg() {
+        return "Screen Automator TYPE:"+action_type ;
+    }
+
+    @Override
+    public String getBaseTaskEndMsg() {
+        return "Screen Automator";
+    }
+
+    @Override
+    public void executeBaseTask(MainReportSection rs) {
+        rs.errorMsg("not supported");
     }
 
     @NonNull

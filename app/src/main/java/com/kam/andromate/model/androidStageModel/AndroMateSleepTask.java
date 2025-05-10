@@ -2,7 +2,6 @@ package com.kam.andromate.model.androidStageModel;
 
 import androidx.annotation.NonNull;
 
-import com.kam.andromate.IConstants;
 import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
@@ -51,10 +50,18 @@ public class AndroMateSleepTask extends AndroidTask {
     }
 
     @Override
-    public void executeTask(MainReportSection rs) {
-        rs.appendFmvKey("Sleep ", " time="+timeSleep);
+    public String getBaseTaskStartMsg() {
+        return "Sleep time="+timeSleep;
+    }
+
+    @Override
+    public String getBaseTaskEndMsg() {
+        return "Sleep";
+    }
+
+    @Override
+    public void executeBaseTask(MainReportSection rs) {
         ThreadHelper.deepSleep(timeSleep);
-        rs.info("end Sleep");
     }
 
     @NonNull
