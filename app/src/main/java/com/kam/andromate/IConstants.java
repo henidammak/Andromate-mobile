@@ -1,5 +1,7 @@
 package com.kam.andromate;
 
+import java.util.List;
+
 public interface IConstants {
 
     boolean DEBUG = true;
@@ -18,4 +20,14 @@ public interface IConstants {
     String APP_RESTART_RECEIVER = "app_restart_receiver";
 
     int SECONDS_VALUE = 1000;
+
+    int PROGRESS_UNIT = 10;
+
+    String[] PERMISSIONS = {
+            "android.permission.POST_NOTIFICATIONS",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.ACCESS_COARSE_LOCATION",
+            "android.permission.ACCESS_FINE_LOCATION"
+    };
+
 }

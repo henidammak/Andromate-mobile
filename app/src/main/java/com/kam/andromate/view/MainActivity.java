@@ -31,9 +31,6 @@ import com.kam.andromate.singletons.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 import com.kam.andromate.utils.AppUtils;
-import com.kam.andromate.utils.ThreadUtils.AndroMateThread;
-import com.kam.andromate.utils.ThreadUtils.CmdHelper;
-import com.kam.andromate.utils.ThreadUtils.CmdObserver;
 
 import org.json.JSONObject;
 
@@ -195,30 +192,10 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (testButton != null) {
-            testButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AndroMateThread.runInBackground("testThread", new Runnable() {
-                        @Override
-                        public void run() {
-                            CmdHelper.executeCommand("ping -n 4 www.google.com", false, new CmdObserver() {
-                                @Override
-                                public void onCommandSuccess(String resultCmd) {
-                                    mainReportSection.info("success"+resultCmd);
-                                }
-
-                                @Override
-                                public void onCommandError(String errorCmd) {
-                                    mainReportSection.errorMsg("error cmd"+errorCmd);
-
-                                }
-                            });
-                        }
-                    });
-                }
+            testButton.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, AndroMateProgressActivity.class);
+                startActivity(intent);
             });
-        } else {
-            mainReportSection.appendMsg("null value");
         }
     }
 

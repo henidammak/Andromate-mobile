@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
+import com.kam.andromate.utils.ThreadUtils.AndroMateThread;
 import com.kam.andromate.utils.TimeUtils;
 
 public class ReportSection {
@@ -43,11 +44,12 @@ public class ReportSection {
 
     private void append(String text) {
         //edit view should be done in ui thread
-        UI_THREAD_HANDLER.post(() -> terminalView.append(text));
+        AndroMateThread.runOnUiThread(() -> terminalView.append(text));
     }
 
     private void append(Spanned spanned) {
-        UI_THREAD_HANDLER.post(() -> terminalView.append(spanned));
+        //edit view should be done in ui thread
+        AndroMateThread.runOnUiThread(() -> terminalView.append(spanned));
     }
 
     private String getTimeStampViewFormat() {
