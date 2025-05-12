@@ -41,7 +41,7 @@ public class AndroMateProgressActivity extends AppCompatActivity {
 
     private static void animateProgressBar(ProgressBar progressBar, int from, int to) {
         ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", from, to);
-        animation.setDuration(1000); // 1 second
+        animation.setDuration(500); // 1 second
         animation.start();
     }
 
