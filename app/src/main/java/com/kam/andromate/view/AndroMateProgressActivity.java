@@ -74,10 +74,10 @@ public class AndroMateProgressActivity extends AppCompatActivity {
                 ThreadHelper.deepSleep(4 * IConstants.SECONDS_VALUE);
                 break;
             case CHECK_DEVICE_PERMISSION:
-                checkAppPermission();
+                ThreadHelper.deepSleep(4 * IConstants.SECONDS_VALUE);
                 break;
             case CHECK_APP_PERMISSIONS:
-                ThreadHelper.deepSleep(4 * IConstants.SECONDS_VALUE);
+                checkAppPermission();
                 break;
             case CHECK_MESSAGING_CONNECTION:
                 ThreadHelper.deepSleep(4 * IConstants.SECONDS_VALUE);
