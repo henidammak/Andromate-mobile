@@ -7,7 +7,51 @@
     android:id="@+id/main"
     android:background="@color/white"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="24dp">
+        <LinearLayout android:id="@+id/appName"  android:layout_width="wrap_content" android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="start"
+            android:background="#FFFFFFFF">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Andromate"
+                android:textColor="@color/app_color"
+                android:layout_gravity="bottom"
+                android:paddingBottom="0dp"
+                android:paddingLeft="6dp"
+                android:textSize="12sp" />
+            <TextView android:id="@+id/andromate_version_txt" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="v1.1.0"
+                android:textColor="@color/app_color"
+                android:layout_gravity="bottom"
+                android:paddingBottom="0dp"
+                android:paddingLeft="6dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/topbar_separator"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+            <TextView
+                android:id="@+id/date_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="13/05/2025"
+                android:textColor="@color/app_color"
+                android:textSize="12sp" />
+        </LinearLayout>
 
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +63,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:scaleType="fitXY"
-            android:src="@mipmap/img_1" />
+            android:src="@mipmap/img_2" />
 
         <ToggleButton
             android:id="@+id/controlLineRts"
@@ -27,6 +71,7 @@
             android:layout_height="wrap_content"
             android:minWidth="48sp"
             android:background="@color/white"
+            android:textColor="@color/app_color"
             android:textOff="RTS"
             android:textOn="RTS" />
 
@@ -35,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
+            android:textColor="@color/app_color"
             android:background="@color/white"
             android:textOff="CTS"
             android:textOn="CTS" />
@@ -48,12 +94,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
+            android:textColor="@color/app_color"
             android:background="@color/white"
             android:textOff="CNX"
             android:textOn="CNX" />
 
         <ToggleButton
             android:id="@+id/startButtonId"
+            android:textColor="@color/app_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
@@ -67,6 +115,7 @@
 
         <ToggleButton
             android:id="@+id/stopButtonId"
+            android:textColor="@color/app_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
@@ -76,6 +125,7 @@
 
         <ToggleButton
             android:id="@+id/testButtonId"
+            android:textColor="@color/app_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48sp"
