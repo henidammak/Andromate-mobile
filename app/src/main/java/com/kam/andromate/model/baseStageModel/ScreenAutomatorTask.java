@@ -84,8 +84,8 @@ public class ScreenAutomatorTask extends BaseTask {
         this.action_type = action_type;
     }
 
-    public long getGlobalAction_type() {
-        return globalAction_type;
+    public int getGlobalAction_type() {
+        return (int) globalAction_type;
     }
 
     public void setGlobalAction_type(long globalAction_type) {

@@ -10,8 +10,8 @@ public class AndroMateDevice {
     private final String cpuHardware;
     private final String screenResolution;
     private final String deviceFactory;
-
     private final boolean deviceRoot;
+    private final int deviceSdk;
 
     public String getDeviceFactory() {
         return deviceFactory;
@@ -33,12 +33,13 @@ public class AndroMateDevice {
 
     private static AndroMateDevice instance = null;
 
-    private AndroMateDevice(String deviceId, String cpuHardware, String screenResolution, String deviceFactory, boolean deviceRoot) {
+    private AndroMateDevice(String deviceId, String cpuHardware, String screenResolution, String deviceFactory, boolean deviceRoot, int deviceSdk) {
         this.deviceId = deviceId;//device Id
         this.cpuHardware = cpuHardware;//cpu factory like intel
         this.screenResolution = screenResolution;//screen resolution like 1920*1080
         this.deviceFactory = deviceFactory;
         this.deviceRoot = deviceRoot;
+        this.deviceSdk = deviceSdk;
     }
 
     public static AndroMateDevice getInstance() {
@@ -52,7 +53,8 @@ public class AndroMateDevice {
                     DeviceUtils.getCpuHardware(),
                     DeviceUtils.getScreenResolution(context),
                     DeviceUtils.getDeviceFactory(),
-                    DeviceUtils.isDeviceRoot()
+                    DeviceUtils.isDeviceRoot(),
+                    DeviceUtils.getDeviceSdk()
 
 
             );

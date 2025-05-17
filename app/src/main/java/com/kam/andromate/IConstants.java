@@ -1,7 +1,5 @@
 package com.kam.andromate;
 
-import java.util.List;
-
 public interface IConstants {
 
     boolean DEBUG = true;

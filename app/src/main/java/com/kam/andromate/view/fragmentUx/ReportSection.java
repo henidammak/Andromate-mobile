@@ -1,7 +1,5 @@
 package com.kam.andromate.view.fragmentUx;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
@@ -21,7 +19,6 @@ public class ReportSection {
     private static final String RED_COLOR_HTML_CODE   = "<font color='#FF0000'>"+HTML_B_FONT_START;
     private static final String GREEN_COLOR_HTML_CODE = "<font color='#00A000'>"+HTML_B_FONT_START;
     private static final String BLUE_COLOR_HTML_CODE  = "<font color='#0000A0'>"+HTML_B_FONT_START;
-    private static final Handler UI_THREAD_HANDLER = new Handler(Looper.getMainLooper());
 
 
     TextView terminalView;

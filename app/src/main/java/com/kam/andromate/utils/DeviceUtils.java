@@ -62,8 +62,8 @@ public class DeviceUtils {
     }
 
 
-
-
-
+    public static int getDeviceSdk() {
+        return Build.VERSION.SDK_INT;
+    }
 
 }

@@ -19,7 +19,7 @@ public class MainReportSection extends ReportSection{
         appendFmvKey("Date", TimeUtils.getCurrentDateAsSimpleFormat());
         AndroMateDevice androMateDevice = AndroMateDevice.getInstance();
         if (androMateDevice != null) {
-            appendTitle("Informations appareil");
+            appendTitle("Device Information");
             incMargin();
             appendFmvKey("Device factory", androMateDevice.getDeviceFactory());
             appendFmvKey("Device id", androMateDevice.getDeviceId());
@@ -29,7 +29,7 @@ public class MainReportSection extends ReportSection{
         }
         AndroMateApp androMateApp = AndroMateApp.getInstance();
         if (androMateApp != null) {
-            appendTitle("Informations application");
+            appendTitle("App Information");
             incMargin();
             appendFmvKey("version", androMateApp.getVersionName());
             discMargin();
