@@ -32,16 +32,18 @@ public class BaseControlService extends AccessibilityService {
     @SuppressLint("InlinedApi")
     @Override
     public void onCreate() {
-        if (baseControlReceiver == null) {
-            baseControlReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (intent != null)
-                        onReceiveAction(intent);
-                }
-            };
-            registerReceiver(baseControlReceiver, new IntentFilter(ControlServiceConstants.RECEIVER_ACTION_NAME), Context.RECEIVER_EXPORTED);
-        }
+        try {
+            if (baseControlReceiver == null) {
+                baseControlReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        if (intent != null)
+                            onReceiveAction(intent);
+                    }
+                };
+                registerReceiver(baseControlReceiver, new IntentFilter(ControlServiceConstants.RECEIVER_ACTION_NAME), Context.RECEIVER_EXPORTED);
+            }
+        } catch (Throwable ignored) {}
         super.onCreate();
     }
 
@@ -66,10 +68,12 @@ public class BaseControlService extends AccessibilityService {
     }
 
     private synchronized void unregisterReceiver() {
-        if (baseControlReceiver != null) {
-            unregisterReceiver(baseControlReceiver);
-            baseControlReceiver = null;
-        }
+        try {
+            if (baseControlReceiver != null) {
+                unregisterReceiver(baseControlReceiver);
+                baseControlReceiver = null;
+            }
+        } catch (Throwable ignored) {}
     }
 
 

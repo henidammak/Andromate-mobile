@@ -25,7 +25,11 @@ public interface IConstants {
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.READ_PHONE_STATE",
             "android.permission.ACCESS_COARSE_LOCATION",
-            "android.permission.ACCESS_FINE_LOCATION"
+            "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.SEND_SMS",
+            "android.permission.READ_SMS",
+            "android.permission.RECEIVE_SMS"
+
     };
 
 }

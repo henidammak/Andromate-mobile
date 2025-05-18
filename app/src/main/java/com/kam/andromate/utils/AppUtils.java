@@ -16,6 +16,10 @@ public class AppUtils {
         return versionName;
     }
 
+    public static String getPackageName(Context context) {
+        return context.getPackageName();
+    }
+
     public static void rebootApp(Context context) {
         Intent intent = new Intent(IConstants.APP_RESTART_RECEIVER);
         context.sendBroadcast(intent);

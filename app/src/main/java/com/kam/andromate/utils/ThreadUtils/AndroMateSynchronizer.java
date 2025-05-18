@@ -29,7 +29,6 @@ public class AndroMateSynchronizer<RESULT,ERROR> {
 
     public synchronized void notifySuccess(RESULT result) {
         if (done) {
-            if (IConstants.DEBUG) Log.e(TAG, "already notified",new Throwable());
             return;
         }
         this.done=true;

@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         if (!IConstants.SHOW_EXECUTE_BAR) {
             findViewById(R.id.CommandLinearLayoutId).setVisibility(View.GONE);
         }
-        AndroMateDevice.setInstance(getApplicationContext());
-        AndroMateApp.setInstance(getApplicationContext());
         mainReportSection.initAndroMateReportInfo();
     }
 
@@ -92,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void initBroadcastReceiver() {
         if (appRestartReceiver == null) {
             appRestartReceiver = new BroadcastReceiver() {
+                @SuppressLint("UnsafeIntentLaunch")
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     try {
