@@ -1,5 +1,7 @@
 package com.kam.andromate.model.androidStageModel;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.model.AndroidTask;
@@ -60,7 +62,7 @@ public class AndroMateSleepTask extends AndroidTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs) {
+    public void executeBaseTask(MainReportSection rs, Context context) {
         ThreadHelper.deepSleep(timeSleep);
     }
 

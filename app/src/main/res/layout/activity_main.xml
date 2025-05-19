@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:background="@color/white"
+    android:keepScreenOn="true"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="fill_parent"

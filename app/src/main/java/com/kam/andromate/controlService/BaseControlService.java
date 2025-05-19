@@ -7,9 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import androidx.annotation.Nullable;
+
+import com.kam.andromate.controlService.ControlServiceModels.ControlServiceEntity;
+import com.kam.andromate.controlService.ControlServiceModels.ControlServiceSync;
+import com.kam.andromate.controlService.ControlServiceModels.GlobalActionEntity;
+import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
 
 public class BaseControlService extends AccessibilityService {
 
@@ -64,7 +70,22 @@ public class BaseControlService extends AccessibilityService {
     }
 
     private void onReceiveAction(Intent intent) {
-        
+        try {
+            ControlServiceEntity controlServiceEntity = ControlServiceFactory.CreateControlServiceEntityFromIntent(intent);
+            if (controlServiceEntity instanceof GlobalActionEntity) {
+                GlobalActionEntity globalActionEntity = (GlobalActionEntity) controlServiceEntity;
+                boolean done = performGlobalAction(globalActionEntity.getGlobalActionType().actionType);
+                if (done) {
+                    ControlServiceSync.getInstance().notifyDone();
+                } else {
+                    ControlServiceSync.getInstance().notifyNotDone();
+                }
+            }
+        } catch (ControlServiceException e) {
+            ControlServiceSync.getInstance().notifyWithError(e);
+        } catch (Throwable t) {
+            Log.e("my_tag"," cannot perfomme action due to "+t);
+        }
     }
 
     private synchronized void unregisterReceiver() {

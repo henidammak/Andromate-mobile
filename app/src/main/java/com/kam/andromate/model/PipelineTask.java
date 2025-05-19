@@ -1,5 +1,7 @@
 package com.kam.andromate.model;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.view.MainReportSection;
@@ -32,16 +34,16 @@ public abstract class PipelineTask {
         return title;
     }
 
-    public void execute(MainReportSection rs) {
+    public void execute(MainReportSection rs, Context context) {
         //TODO: Here start recording MainReportSection to get file and save it in db
         rs.appendTitle("execute task "+title);
-        executeTask(rs);
+        executeTask(rs, context);
         rs.appendTitle("end task "+title);
         //TODO stop recording and get file and upload it in db
         //TODO WEB FRONT SHOULD GET THE FILE EXECUTION FOR EACH DEVICE
     }
 
-    abstract public void executeTask(MainReportSection rs);
+    abstract public void executeTask(MainReportSection rs, Context context);
 
     @NonNull
     @Override

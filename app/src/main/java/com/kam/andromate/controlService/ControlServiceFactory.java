@@ -47,8 +47,8 @@ public class ControlServiceFactory {
         if (intent == null || intent.getStringExtra(TAG_CONTROL_ACTION_TYPE) == null) {
             throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
         } else {
-            switch (Objects.requireNonNull(intent.getStringExtra(TAG_GLOBAL_ACTION_TYPE))) {
-                case TAG_CONTROL_ACTION_TYPE:
+            switch (Objects.requireNonNull(intent.getStringExtra(TAG_CONTROL_ACTION_TYPE))) {
+                case TAG_GLOBAL_ACTION_TYPE:
                     try {
                         GlobalActionType globalActionType = (GlobalActionType) intent.getSerializableExtra(TAG_GLOBAL_ACTION_VALUE);
                         controlServiceEntity = new GlobalActionEntity(globalActionType);

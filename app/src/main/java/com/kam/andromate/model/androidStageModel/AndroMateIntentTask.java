@@ -1,5 +1,7 @@
 package com.kam.andromate.model.androidStageModel;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.IConstants;
@@ -120,7 +122,7 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs) {
+    public void executeBaseTask(MainReportSection rs, Context context) {
         rs.errorMsg("not supported");
     }
 

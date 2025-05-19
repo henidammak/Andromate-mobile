@@ -1,13 +1,25 @@
 package com.kam.andromate.model.baseStageModel;
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.IConstants;
+import com.kam.andromate.controlService.ControlServiceConstants;
+import com.kam.andromate.controlService.ControlServiceFactory;
+import com.kam.andromate.controlService.ControlServiceModels.ControlServiceSync;
+import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.utils.DeviceUtils;
+import com.kam.andromate.utils.ThreadUtils.AndroMateSynchronizer;
+import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
+
+import java.util.concurrent.TimeoutException;
 
 public class ScreenAutomatorTask extends BaseTask {
 
@@ -177,8 +189,54 @@ public class ScreenAutomatorTask extends BaseTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs) {
-        rs.errorMsg("not supported");
+    public void executeBaseTask(MainReportSection rs, Context context) {
+        boolean intentCreated = false;
+        try {
+            Intent intent = ControlServiceFactory.ScreenAutomatorToIntent(this);
+            context.sendBroadcast(intent);
+            intentCreated = true;
+        } catch (ControlServiceException e) {
+            String errorMsg = e.getErrorCode().getDescription();
+            String errorMsgDetail = null;
+            switch (e.getErrorCode()) {
+                case INVALID_ACTION_TYPE:
+                    errorMsgDetail="action type = "+action_type;
+                    break;
+                case INVALID_INTENT:
+                    break;
+                case INVALID_X_Y_INPUT:
+                    errorMsgDetail = "negative x or y input";
+                    break;
+                case INVALID_CONTROL_SERVICE_GLOBAL_ACTION:
+                    errorMsgDetail = globalAction_type + " not exist";
+                    break;
+                case UNSUPPORTED_CONTROL_SERVICE_GLOBAL_ACTION:
+                    errorMsgDetail = globalAction_type+"cannot performed in sdk "+ DeviceUtils.getDeviceSdk();
+                    break;
+            }
+            if (errorMsgDetail != null) {
+                errorMsg = errorMsg + " : "+errorMsgDetail;
+            }
+            rs.errorMsg(errorMsg);
+            ThreadHelper.deepSleep(2 * IConstants.SECONDS_VALUE);
+        } catch (Throwable t) {
+            rs.errorMsg("error not supported "+t);
+        }
+        if (intentCreated) {
+            try {
+                AndroMateSynchronizer<Boolean, ControlServiceException> sync = ControlServiceSync.getInstance()
+                        .waitNotification(ControlServiceConstants.DEFAULT_CONTROL_SERVICE_TIME_OUT_MS);
+                if (sync.result) {
+                    rs.info("action performed");
+                } else {
+                    rs.errorMsg("action cannot performed");
+                }
+            } catch (TimeoutException e) {
+                rs.errorMsg("timeout action expired "+ControlServiceConstants.DEFAULT_CONTROL_SERVICE_TIME_OUT_MS);
+            } catch (ControlServiceException e) {
+                rs.errorMsg("exception received from control service "+e.getErrorCode().getCode());
+            }
+        }
     }
 
     @NonNull

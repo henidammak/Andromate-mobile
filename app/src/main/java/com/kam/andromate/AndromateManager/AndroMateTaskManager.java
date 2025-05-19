@@ -172,7 +172,7 @@ public class AndroMateTaskManager {
                     ThreadHelper.deepSleep(5 * IConstants.SECONDS_VALUE);
                     rs.incMargin();
                     //TODO: replace executeTask by execute
-                    compositeTaskSynchronizer.result.execute(rs);
+                    compositeTaskSynchronizer.result.execute(rs, context);
                     rs.info("end task execution");
                     rs.discMargin();
                 }

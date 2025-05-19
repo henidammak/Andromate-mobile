@@ -34,9 +34,9 @@ public enum GlobalActionType {
     GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN(  "Action to toggle docking the current app's window.",           AccessibilityService.GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN,             24);
 
 
-    final String descr;
-    final int actionType;
-    final int minSdk;
+    public final String descr;
+    public final int actionType;
+    public final int minSdk;
 
     private GlobalActionType(String descr, int actionType, int minSdk) {
         this.descr = descr;

@@ -2,12 +2,13 @@ package com.kam.andromate.controlService.ControlServiceModels.controlServiceExce
 
 public enum ControlServiceErrorType {
 
+
+
     INVALID_CONTROL_SERVICE_GLOBAL_ACTION("E001", "Invalid global action"),
     UNSUPPORTED_CONTROL_SERVICE_GLOBAL_ACTION("E002", "Unsupported control service global action"),
     INVALID_ACTION_TYPE("E003","Invalid Action Type"),
     INVALID_X_Y_INPUT("E004","Invalid x y input"),
     INVALID_INTENT("E005", "Invalid Intent Received");
-
 
     private final String code;
     private final String description;

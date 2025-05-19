@@ -1,5 +1,7 @@
 package com.kam.andromate.model.baseStageModel;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.IConstants;
@@ -77,7 +79,7 @@ public class AndroMateCmdTask extends BaseTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs) {
+    public void executeBaseTask(MainReportSection rs, Context context) {
         CmdHelper.executeCommand(cmdText, cmdRoot, new CmdObserver() {
             @Override
             public void onCommandSuccess(String resultCmd) {

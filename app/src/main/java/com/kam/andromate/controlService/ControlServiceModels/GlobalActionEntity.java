@@ -10,4 +10,7 @@ public class GlobalActionEntity implements ControlServiceEntity{
         this.globalActionType = globalActionType;
     }
 
+    public GlobalActionType getGlobalActionType() {
+        return globalActionType;
+    }
 }

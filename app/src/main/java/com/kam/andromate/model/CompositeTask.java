@@ -1,6 +1,8 @@
 package com.kam.andromate.model;
 
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.view.MainReportSection;
@@ -105,9 +107,9 @@ public class CompositeTask extends PipelineTask{
     }
 
     @Override
-    public void executeTask(MainReportSection rs) {
+    public void executeTask(MainReportSection rs, Context context) {
         for (PipelineTask task : taskList) {
-            task.executeTask(rs);
+            task.executeTask(rs, context);
         }
     }
 
