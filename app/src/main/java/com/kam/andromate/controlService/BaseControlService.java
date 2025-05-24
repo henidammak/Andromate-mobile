@@ -9,12 +9,15 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import androidx.annotation.Nullable;
 
-import com.kam.andromate.controlService.ControlServiceModels.ControlServiceEntity;
+import com.kam.andromate.controlService.ControlServiceModels.ControlServiceUtils;
+import com.kam.andromate.controlService.ControlServiceModels.entity.ClickInTextEntity;
+import com.kam.andromate.controlService.ControlServiceModels.entity.ControlServiceEntity;
 import com.kam.andromate.controlService.ControlServiceModels.ControlServiceSync;
-import com.kam.andromate.controlService.ControlServiceModels.GlobalActionEntity;
+import com.kam.andromate.controlService.ControlServiceModels.entity.GlobalActionEntity;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
 
 public class BaseControlService extends AccessibilityService {
@@ -72,20 +75,25 @@ public class BaseControlService extends AccessibilityService {
     private void onReceiveAction(Intent intent) {
         try {
             ControlServiceEntity controlServiceEntity = ControlServiceFactory.CreateControlServiceEntityFromIntent(intent);
+            boolean done = false;
             if (controlServiceEntity instanceof GlobalActionEntity) {
                 GlobalActionEntity globalActionEntity = (GlobalActionEntity) controlServiceEntity;
-                boolean done = performGlobalAction(globalActionEntity.getGlobalActionType().actionType);
-                if (done) {
-                    ControlServiceSync.getInstance().notifyDone();
-                } else {
-                    ControlServiceSync.getInstance().notifyNotDone();
+                done = performGlobalAction(globalActionEntity.getGlobalActionType().actionType);
+            } else if (controlServiceEntity instanceof ClickInTextEntity) {
+                ClickInTextEntity clickInTextEntity = (ClickInTextEntity) controlServiceEntity;
+                AccessibilityNodeInfo nodeInfo = ControlServiceUtils.getNodeInfoFromText(clickInTextEntity.getCompareType(), clickInTextEntity.getTextSelector(), getRootInActiveWindow(), clickInTextEntity.getText(), clickInTextEntity.getTextIndex());
+                if (nodeInfo != null) {
+                    done = nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 }
+            }
+            if (done) {
+                ControlServiceSync.getInstance().notifyDone();
+            } else {
+                ControlServiceSync.getInstance().notifyNotDone();
             }
         } catch (ControlServiceException e) {
             ControlServiceSync.getInstance().notifyWithError(e);
-        } catch (Throwable t) {
-            Log.e("my_tag"," cannot perfomme action due to "+t);
-        }
+        } catch (Throwable ignored) {}
     }
 
     private synchronized void unregisterReceiver() {

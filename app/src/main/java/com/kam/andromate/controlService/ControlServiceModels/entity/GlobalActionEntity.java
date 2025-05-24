@@ -1,8 +1,8 @@
-package com.kam.andromate.controlService.ControlServiceModels;
+package com.kam.andromate.controlService.ControlServiceModels.entity;
 
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceTypes.GlobalActionType;
 
-public class GlobalActionEntity implements ControlServiceEntity{
+public class GlobalActionEntity implements ControlServiceEntity {
 
     GlobalActionType globalActionType = null;
 
