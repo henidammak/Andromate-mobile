@@ -3,6 +3,7 @@ package com.kam.andromate.controlService;
 import android.content.Intent;
 
 import com.kam.andromate.controlService.ControlServiceModels.entity.ClickInTextEntity;
+import com.kam.andromate.controlService.ControlServiceModels.entity.ClickIn_X_Y_Entity;
 import com.kam.andromate.controlService.ControlServiceModels.entity.ControlServiceEntity;
 import com.kam.andromate.controlService.ControlServiceModels.entity.GlobalActionEntity;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceTypes.ControlServiceActionType;
@@ -33,6 +34,10 @@ public class ControlServiceFactory {
     private final static String TAG_TEXT_INDEX = "text_index";
     private final static String TAG_TEXT_VALUE_TAG = "text_value";
 
+    private final static String TAG_CLICK_IN_XY_ACTION_TYPE = "click_in_x_y_type";
+    private final static String TAG_X_VALUE = "x_value";
+    private final static String TAG_Y_VALUE = "y_value";
+
     private static Intent createGlobalActionIntent(ScreenAutomatorTask screenAutomatorTask) throws ControlServiceException {
         Intent intent = new Intent(ControlServiceConstants.RECEIVER_ACTION_NAME);
         intent.putExtra(TAG_CONTROL_ACTION_TYPE, TAG_GLOBAL_ACTION_TYPE);
@@ -50,6 +55,18 @@ public class ControlServiceFactory {
         return intent;
     }
 
+    private static Intent createClickIn_XY_actionIntent(ScreenAutomatorTask screenAutomatorTask) throws ControlServiceException {
+        Intent intent = new Intent(ControlServiceConstants.RECEIVER_ACTION_NAME);
+        if (screenAutomatorTask.getClickInXY_X() < 0 || screenAutomatorTask.getClickInXY_Y() < 0) {
+            throw new ControlServiceException(ControlServiceErrorType.INVALID_X_Y_INPUT);
+        } else {
+            intent.putExtra(TAG_CONTROL_ACTION_TYPE, TAG_CLICK_IN_XY_ACTION_TYPE);
+            intent.putExtra(TAG_X_VALUE, screenAutomatorTask.getClickInXY_X());
+            intent.putExtra(TAG_Y_VALUE, screenAutomatorTask.getClickInXY_Y());
+        }
+        return intent;
+    }
+
     public static Intent ScreenAutomatorToIntent(ScreenAutomatorTask screenAutomatorTask) throws ControlServiceException {
         ControlServiceActionType actionType = ControlServiceActionType.getControlServiceActionTypeFromText(screenAutomatorTask.getAction_type());
         Intent screenAutomatorIntent = null;
@@ -57,6 +74,8 @@ public class ControlServiceFactory {
             screenAutomatorIntent = createGlobalActionIntent(screenAutomatorTask);
         } else if (actionType == ControlServiceActionType.CLICK_IN_TEXT) {
             screenAutomatorIntent = createClickInTextActionIntent(screenAutomatorTask);
+        } else if (actionType == ControlServiceActionType.CLICK_IN_X_Y) {
+            screenAutomatorIntent = createClickIn_XY_actionIntent(screenAutomatorTask);
         } else {
             throw new ControlServiceException(ControlServiceErrorType.INVALID_ACTION_TYPE);
         }
@@ -87,6 +106,18 @@ public class ControlServiceFactory {
                             throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
                         }
                         controlServiceEntity = new ClickInTextEntity(compareType, textSelector, textIndex, text);
+                    } catch (Throwable t) {
+                        throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
+                    }
+                    break;
+                case TAG_CLICK_IN_XY_ACTION_TYPE:
+                    try {
+                        long x = intent.getLongExtra(TAG_X_VALUE, -1);
+                        long y = intent.getLongExtra(TAG_Y_VALUE, -1);
+                        if (x < 0 || y <0) {
+                            throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
+                        }
+                        controlServiceEntity = new ClickIn_X_Y_Entity(x, y);
                     } catch (Throwable t) {
                         throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
                     }
