@@ -12,6 +12,7 @@ import com.kam.andromate.controlService.ControlServiceModels.controlServiceExcep
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceTypes.clickTextModels.CompareType;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceTypes.clickTextModels.TextSelector;
+import com.kam.andromate.controlService.ControlServiceModels.entity.LogInScreenEntity;
 import com.kam.andromate.model.baseStageModel.ScreenAutomatorTask;
 
 import java.util.Objects;
@@ -37,6 +38,8 @@ public class ControlServiceFactory {
     private final static String TAG_CLICK_IN_XY_ACTION_TYPE = "click_in_x_y_type";
     private final static String TAG_X_VALUE = "x_value";
     private final static String TAG_Y_VALUE = "y_value";
+
+    private final static String TAG_LOG_SCREEN_ACTION_TYPE = "log_screen_action_type";
 
     private static Intent createGlobalActionIntent(ScreenAutomatorTask screenAutomatorTask) throws ControlServiceException {
         Intent intent = new Intent(ControlServiceConstants.RECEIVER_ACTION_NAME);
@@ -67,6 +70,12 @@ public class ControlServiceFactory {
         return intent;
     }
 
+    private static Intent createLogScreenIntent(ScreenAutomatorTask screenAutomatorTask) {
+        Intent intent = new Intent(ControlServiceConstants.RECEIVER_ACTION_NAME);
+        intent.putExtra(TAG_CONTROL_ACTION_TYPE, TAG_LOG_SCREEN_ACTION_TYPE);
+        return intent;
+    }
+
     public static Intent ScreenAutomatorToIntent(ScreenAutomatorTask screenAutomatorTask) throws ControlServiceException {
         ControlServiceActionType actionType = ControlServiceActionType.getControlServiceActionTypeFromText(screenAutomatorTask.getAction_type());
         Intent screenAutomatorIntent = null;
@@ -76,6 +85,8 @@ public class ControlServiceFactory {
             screenAutomatorIntent = createClickInTextActionIntent(screenAutomatorTask);
         } else if (actionType == ControlServiceActionType.CLICK_IN_X_Y) {
             screenAutomatorIntent = createClickIn_XY_actionIntent(screenAutomatorTask);
+        } else if (actionType == ControlServiceActionType.LOG_SCREEN) {
+            screenAutomatorIntent = createLogScreenIntent(screenAutomatorTask);
         } else {
             throw new ControlServiceException(ControlServiceErrorType.INVALID_ACTION_TYPE);
         }
@@ -118,6 +129,13 @@ public class ControlServiceFactory {
                             throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
                         }
                         controlServiceEntity = new ClickIn_X_Y_Entity(x, y);
+                    } catch (Throwable t) {
+                        throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
+                    }
+                    break;
+                case TAG_LOG_SCREEN_ACTION_TYPE:
+                    try {
+                        controlServiceEntity = new LogInScreenEntity();
                     } catch (Throwable t) {
                         throw new ControlServiceException(ControlServiceErrorType.INVALID_INTENT);
                     }

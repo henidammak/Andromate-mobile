@@ -6,8 +6,8 @@ import com.kam.andromate.controlService.ControlServiceModels.controlServiceExcep
 public enum TextSelector {
 
     TEXT_SELECTOR("Text"),
-    CONTENT_DESCRIPTION("Content Description"),
-    TOOL_TIP_TEXT("Tooltip text");
+    CONTENT_DESCRIPTION("contentDescription"),
+    TOOL_TIP_TEXT("tooltipText");
 
 
     final String angularText;

@@ -22,7 +22,7 @@ public class ControlServiceUtils {
 
     private static final String TAG = "ControlServiceUtils";
 
-    private interface NodeIterator {
+    public interface NodeIterator {
         void onNode(AccessibilityNodeInfo node);
     }
 
@@ -99,7 +99,7 @@ public class ControlServiceUtils {
         return compareResult;
     }
 
-    private static void iterateNode(AccessibilityNodeInfo nodeInfo, NodeIterator nodeIterator) {
+    public static void iterateNode(AccessibilityNodeInfo nodeInfo, NodeIterator nodeIterator) {
         if (nodeInfo != null) {
             nodeIterator.onNode(nodeInfo);
             for (int nodeIndex=0; nodeIndex < nodeInfo.getChildCount(); nodeIndex++) {
@@ -136,6 +136,18 @@ public class ControlServiceUtils {
             }
         }
         return node;
+    }
+
+    public static String getNodeText(AccessibilityNodeInfo nodeInfo) {
+        String nodeText  = null;
+        if (nodeInfo != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                nodeText = "nodeInfo (text = "+nodeInfo.getText() + ", contentDescription = "+nodeInfo.getContentDescription() + ", toolTipText"+ nodeInfo.getTooltipText()+")";
+            } else {
+                nodeText = "nodeInfo (text = "+nodeInfo.getText() + ", contentDescription = "+nodeInfo.getContentDescription()+")";
+            }
+        }
+        return nodeText;
     }
 
 }

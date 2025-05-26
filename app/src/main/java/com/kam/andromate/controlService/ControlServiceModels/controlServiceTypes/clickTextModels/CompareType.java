@@ -5,8 +5,8 @@ import com.kam.andromate.controlService.ControlServiceModels.controlServiceExcep
 
 public enum CompareType {
 
-    EXACT_TEXT("Exact Text"),
-    START_WITH("Start With"),
+    EXACT_TEXT("exactText"),
+    START_WITH("startWith"),
     CONTAIN("Contain");
 
 

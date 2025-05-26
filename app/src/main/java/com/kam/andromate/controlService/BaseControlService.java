@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Path;
 import android.os.Build;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -21,8 +22,11 @@ import com.kam.andromate.controlService.ControlServiceModels.entity.ControlServi
 import com.kam.andromate.controlService.ControlServiceModels.ControlServiceSync;
 import com.kam.andromate.controlService.ControlServiceModels.entity.GlobalActionEntity;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
+import com.kam.andromate.controlService.ControlServiceModels.entity.LogInScreenEntity;
 
 public class BaseControlService extends AccessibilityService {
+
+    public static final String TAG = "BaseControlService";
 
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
@@ -90,6 +94,15 @@ public class BaseControlService extends AccessibilityService {
             } else if (controlServiceEntity instanceof ClickIn_X_Y_Entity) {
                 ClickIn_X_Y_Entity clickInXYEntity = (ClickIn_X_Y_Entity) controlServiceEntity;
                 done = clickIn_XY(clickInXYEntity.getX(), clickInXYEntity.getY());
+            } else if (controlServiceEntity instanceof LogInScreenEntity) {
+                AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+                if (nodeInfo != null) {
+                    done = true;
+                    ControlServiceUtils.iterateNode(nodeInfo, node -> {
+                        Log.i(TAG, ControlServiceUtils.getNodeText(node));
+                        //TODO: report it in Reportsection is not recomonde find the best way to do it
+                    });
+                }
             }
             if (done) {
                 ControlServiceSync.getInstance().notifyDone();
