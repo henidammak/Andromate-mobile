@@ -1,6 +1,5 @@
 package com.kam.andromate.messagingController.AndromateWebSocket;
 
-import android.content.Context;
 
 import com.kam.andromate.IConstants;
 import com.kam.andromate.singletons.AndroMateDevice;

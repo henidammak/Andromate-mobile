@@ -56,7 +56,6 @@ public class AndroMateDevice {
                     DeviceUtils.isDeviceRoot(),
                     DeviceUtils.getDeviceSdk()
 
-
             );
         }
     }

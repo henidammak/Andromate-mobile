@@ -1,6 +1,8 @@
 package com.kam.andromate.model.androidStageModel;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -9,6 +11,7 @@ import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
 import com.kam.andromate.view.MainReportSection;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -21,14 +24,15 @@ public class AndroMateIntentTask extends AndroidTask {
     public final static String TAG_INTENT_CLASS_NAME = "ClassName";
     public final static String TAG_INTENT_DATA = "Data";
     public final static String TAG_INTENT_ACTION_TYPE = "ActionType";
-    
-    
-    
+
     public final static String DEFAULT_INTENT_ACTION = IConstants.EMPTY_STRING;
     public final static String DEFAULT_INTENT_PACKAGE_NAME = IConstants.EMPTY_STRING;
     public final static String DEFAULT_INTENT_CLASS_NAME = IConstants.EMPTY_STRING;
     public final static String DEFAULT_INTENT_DATA = IConstants.EMPTY_STRING;
     public final static String DEFAULT_INTENT_ACTION_TYPE = IConstants.EMPTY_STRING;
+
+    private static final String SEND_BROADCAST_ACTION_TYPE = "Send Broadcast";
+    private static final String START_ACTIVITY_ACTION_TYPE = "Start Activity";
     
     
     
@@ -94,6 +98,24 @@ public class AndroMateIntentTask extends AndroidTask {
         return intentActionType;
     }
 
+    private Intent createTaskIntent() throws JSONException {
+        Intent intent = new Intent();
+        if (intentAction != null && !intentAction.isEmpty()) {
+            intent.setAction(intentAction);
+        }
+        if (intentPackageName != null && !intentPackageName.isEmpty()) {
+            intent.setPackage(intentPackageName);
+            if (intentClassName != null && !intentClassName.isEmpty()) {
+                intent.setClassName(intentPackageName, intentClassName);
+            }
+        }
+        //TODO: add all keys value in jo in intent variable
+        /*if (intentData != null && !intentData.isEmpty()) {
+            JSONObject jo = new JSONObject(intentData);
+        }*/
+        return intent;
+    }
+
     public void setIntentActionType(String intentActionType) {
         this.intentActionType = intentActionType;
     }
@@ -123,7 +145,28 @@ public class AndroMateIntentTask extends AndroidTask {
 
     @Override
     public void executeBaseTask(MainReportSection rs, Context context) {
-        rs.errorMsg("not supported");
+        Intent intent = null;
+        try {
+            intent = createTaskIntent();
+        } catch (Throwable e) {
+            rs.errorMsg("error on create intent object : "+e);
+        }
+        if (intent != null) {
+            if (intentActionType.equalsIgnoreCase(START_ACTIVITY_ACTION_TYPE)) {
+                try {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(intent);
+                } catch (Throwable t) {
+                    rs.errorMsg("cannot start activity error "+t);
+                }
+            } else if (intentActionType.equalsIgnoreCase(SEND_BROADCAST_ACTION_TYPE)) {
+                try {
+                    context.sendBroadcast(intent);
+                } catch (Throwable t) {
+                    rs.errorMsg("cannot send broadcast error "+t);
+                }
+            }
+        }
     }
 
 

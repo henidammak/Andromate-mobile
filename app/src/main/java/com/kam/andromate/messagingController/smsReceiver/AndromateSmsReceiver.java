@@ -8,7 +8,6 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.kam.andromate.view.AndroMateProgressActivity;
-import com.kam.andromate.view.MainActivity;
 
 public class AndromateSmsReceiver extends BroadcastReceiver {
 
@@ -20,7 +19,6 @@ public class AndromateSmsReceiver extends BroadcastReceiver {
         if (bundle != null) {
             Object[] pdus = (Object[]) bundle.get("pdus");
             String format = bundle.getString("format"); // Needed for createFromPdu
-
             if (pdus != null) {
                 for (Object pdu : pdus) {
                     SmsMessage smsMessage;
