@@ -25,4 +25,9 @@ public class AppUtils {
         context.sendBroadcast(intent);
     }
 
+    public static void moveToFront(Context context) {
+        Intent intent = new Intent(IConstants.MOVE_APP_TO_FRONT_RECEIVER);
+        context.sendBroadcast(intent);
+    }
+
 }

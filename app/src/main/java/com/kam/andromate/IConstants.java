@@ -16,6 +16,7 @@ public interface IConstants {
     String DEVICE_ID_TAG = "device_id";
 
     String APP_RESTART_RECEIVER = "app_restart_receiver";
+    String MOVE_APP_TO_FRONT_RECEIVER = "move_to_front_receiver";
 
     int SECONDS_VALUE = 1000;
 

@@ -1,6 +1,7 @@
 package com.kam.andromate.view;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,8 +27,6 @@ import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketClient;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterface;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
 import com.kam.andromate.model.factory.AndroMateFactory;
-import com.kam.andromate.singletons.AndroMateApp;
-import com.kam.andromate.singletons.AndroMateDevice;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.R;
 import com.kam.andromate.utils.AppUtils;
@@ -45,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     / receiver to restart AndroMate app
     */
     BroadcastReceiver appRestartReceiver = null;
+
+    /**
+     * receiver to move app to foreground
+     */
+    BroadcastReceiver moveAppToFrontReceiver = null;
+
 
     private MainReportSection mainReportSection = null;
     ImageButton execButton = null;
@@ -107,6 +112,19 @@ public class MainActivity extends AppCompatActivity {
             };
             registerReceiver(appRestartReceiver, new IntentFilter(IConstants.APP_RESTART_RECEIVER), Context.RECEIVER_EXPORTED);
         }
+        if (moveAppToFrontReceiver == null) {
+            moveAppToFrontReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    try {
+                        //TODO: find other method to modify deprecated getRunngingTasks methods
+                        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                        am.moveTaskToFront(getTaskId(), 0);
+                    } catch (Throwable ignored) {}
+                }
+            };
+            registerReceiver(moveAppToFrontReceiver, new IntentFilter(IConstants.MOVE_APP_TO_FRONT_RECEIVER), Context.RECEIVER_EXPORTED);
+        }
     }
 
     private void unregisterReceiver() {
@@ -116,6 +134,14 @@ public class MainActivity extends AppCompatActivity {
                 appRestartReceiver = null;
             } catch (Throwable t) {
                 Log.e(TAG, " cannot unregister app restart receiver due to "+t);
+            }
+        }
+        if (moveAppToFrontReceiver != null) {
+            try {
+                unregisterReceiver(moveAppToFrontReceiver);
+                moveAppToFrontReceiver = null;
+            } catch (Throwable t) {
+                Log.e(TAG, " cannot unregister move to front receiver due to "+t);
             }
         }
     }

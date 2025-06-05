@@ -14,6 +14,7 @@ import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterfa
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
 import com.kam.andromate.model.CompositeTask;
 import com.kam.andromate.model.factory.AndroMateFactory;
+import com.kam.andromate.utils.AppUtils;
 import com.kam.andromate.utils.ThreadUtils.AndroMateSynchronizer;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
@@ -175,6 +176,7 @@ public class AndroMateTaskManager {
                     compositeTaskSynchronizer.result.execute(rs, context);
                     rs.info("end task execution");
                     rs.discMargin();
+                    AppUtils.moveToFront(context);
                 }
             }
         }
