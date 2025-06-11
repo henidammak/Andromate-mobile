@@ -70,6 +70,7 @@ public class AndroMateTaskManager {
     public Context getContext() {
         return context;
     }
+
     public void start(String name) {
         AndroMataTaskExecutor androMateTaskExecutor = new AndroMataTaskExecutor(name);
         androMateTaskExecutor.executeOnExecutor(THREAD_POOL_EXECUTOR, "");

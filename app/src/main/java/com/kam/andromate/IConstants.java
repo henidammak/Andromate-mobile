@@ -33,4 +33,6 @@ public interface IConstants {
 
     };
 
+    boolean IS_ROBOT_MODE = true;
+
 }

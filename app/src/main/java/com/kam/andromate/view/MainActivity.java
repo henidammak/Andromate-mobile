@@ -33,6 +33,9 @@ import com.kam.andromate.utils.AppUtils;
 
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import okhttp3.Response;
 import okhttp3.WebSocket;
 
@@ -202,10 +205,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (startButton != null) {
             startButton.setOnClickListener(view -> {
-                if (androMateTaskManager == null) {
-                    androMateTaskManager = new AndroMateTaskManager(this, mainReportSection);
-                    androMateTaskManager.start("start task");
-                }
+                launchTaskManager();
             });
         }
         if (stopButton != null) {
@@ -224,10 +224,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void launchTaskManager() {
+        if (androMateTaskManager == null) {
+            androMateTaskManager = new AndroMateTaskManager(getApplicationContext(), mainReportSection);
+            androMateTaskManager.start("start task");
+        }
+    }
+
+    private void launchTaskManagerTimer() {
+        if (androMateTaskManager == null) {
+            Timer timer = new Timer("taskManagerTimer");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    launchTaskManager();
+                }
+            }, 5 * IConstants.SECONDS_VALUE);
+        }
+    }
+
     private void initAndroMateApp() {
         initView();
         initClickEvent();
         initBroadcastReceiver();
+        if (IConstants.IS_ROBOT_MODE) {
+            launchTaskManagerTimer();
+        }
     }
 
     @Override
