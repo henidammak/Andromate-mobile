@@ -37,7 +37,9 @@ public abstract class PipelineTask {
     public void execute(MainReportSection rs, Context context) {
         //TODO: Here start recording MainReportSection to get file and save it in db
         rs.appendTitle("execute task "+title);
+        rs.incTaskMargin();
         executeTask(rs, context);
+        rs.discTaskMargin();
         rs.appendTitle("end task "+title);
         //TODO stop recording and get file and upload it in db
         //TODO WEB FRONT SHOULD GET THE FILE EXECUTION FOR EACH DEVICE

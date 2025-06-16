@@ -9,6 +9,7 @@ import com.kam.andromate.model.androidStageModel.AndroMateIntentTask;
 import com.kam.andromate.model.androidStageModel.AndroMateSleepTask;
 import com.kam.andromate.model.baseStageModel.AndroMateCmdTask;
 import com.kam.andromate.model.baseStageModel.ScreenAutomatorTask;
+import com.kam.andromate.model.baseStageModel.TextReportTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,7 +115,16 @@ public class AndroMateFactory {
                                 }
                             }
                             break;
-
+                        case TextReportTask.JSON_TAG_NAME:
+                            JSONArray textReportArray = jo.optJSONArray(TextReportTask.JSON_TAG_NAME);
+                            if (textReportArray != null) {
+                                for (int i = 0; i < textReportArray.length(); i++) {
+                                    JSONObject screenObj = textReportArray.getJSONObject(i);
+                                    TextReportTask textReportTask = new TextReportTask(screenObj);
+                                    compositeTask.addTask(textReportTask);
+                                }
+                            }
+                            break;
                         case CompositeTask.COMPOSITE_JSON_TAG_NAME:
                             JSONArray compositeArray = jo.optJSONArray(CompositeTask.COMPOSITE_JSON_TAG_NAME);
                             if (compositeArray != null) {

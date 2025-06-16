@@ -24,6 +24,7 @@ public class MainReportSection extends ReportSection{
             appendFmvKey("Device id", androMateDevice.getDeviceId());
             appendFmvKey("Hardware", androMateDevice.getCpuHardware());
             appendFmvKey("Resolution", androMateDevice.getScreenResolution());
+            appendFmvKey("Rooted device", ""+ androMateDevice.isDeviceRoot());
             discMargin();
         }
         AndroMateApp androMateApp = AndroMateApp.getInstance();

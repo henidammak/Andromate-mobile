@@ -24,6 +24,8 @@ public class ReportSection {
     TextView terminalView;
 
     boolean margin = false;
+    boolean taskMargin = false;
+
 
     public ReportSection(TextView terminalView) {
         this.terminalView = terminalView;
@@ -39,6 +41,14 @@ public class ReportSection {
         margin = false;
     }
 
+    public void incTaskMargin() {
+        taskMargin = true;
+    }
+
+    public void discTaskMargin() {
+        taskMargin = false;
+    }
+
     private void append(String text) {
         //edit view should be done in ui thread
         AndroMateThread.runOnUiThread(() -> terminalView.append(text));
@@ -50,8 +60,8 @@ public class ReportSection {
     }
 
     private String getTimeStampViewFormat() {
-        return margin ? TimeUtils.getCurrentTimeAsSimpleFormat() + "-|"
-                : TimeUtils.getCurrentTimeAsSimpleFormat() + "-" ;
+        return taskMargin ? TimeUtils.getCurrentTimeAsSimpleFormat() + "-||" :
+                margin ? TimeUtils.getCurrentTimeAsSimpleFormat() + "-|" : TimeUtils.getCurrentTimeAsSimpleFormat() + "-" ;
     }
 
     public synchronized void appendMsg(String text) {
