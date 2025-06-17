@@ -25,6 +25,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_VIDEO_OUTPUT"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
 
 
@@ -63,6 +68,10 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/screen_automator" />
         </service>
+        <service
+            android:name=".andromateService.ScreenCaptureService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
         <receiver android:name=".messagingController.smsReceiver.AndromateSmsReceiver" android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">

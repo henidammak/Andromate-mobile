@@ -29,7 +29,8 @@ public interface IConstants {
             "android.permission.ACCESS_FINE_LOCATION",
             "android.permission.SEND_SMS",
             "android.permission.READ_SMS",
-            "android.permission.RECEIVE_SMS"
+            "android.permission.RECEIVE_SMS",
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"
 
     };
 

@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import com.kam.andromate.AndromateManager.AndroMateTaskManager;
+import com.kam.andromate.andromateService.ScreenCaptureService;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketClient;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterface;
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
@@ -218,9 +220,24 @@ public class MainActivity extends AppCompatActivity {
         }
         if (testButton != null) {
             testButton.setOnClickListener(view -> {
-                Intent intent = new Intent(MainActivity.this, AndroMateProgressActivity.class);
-                startActivity(intent);
+                try {
+                    MediaProjectionManager mediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                    startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), 1234);
+                } catch (Throwable t) {
+                    Log.e("my_tag","error on test button "+t);
+                }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1234 && resultCode == RESULT_OK) {
+            Intent serviceIntent = new Intent(this, ScreenCaptureService.class);
+            serviceIntent.putExtra("code", resultCode);
+            serviceIntent.putExtra("data", data);
+            startForegroundService(serviceIntent);
         }
     }
 
