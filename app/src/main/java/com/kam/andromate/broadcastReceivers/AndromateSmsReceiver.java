@@ -1,4 +1,4 @@
-package com.kam.andromate.messagingController.smsReceiver;
+package com.kam.andromate.broadcastReceivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import com.kam.andromate.view.AndroMateProgressActivity;
+import com.kam.andromate.utils.AppUtils;
 
 public class AndromateSmsReceiver extends BroadcastReceiver {
 
@@ -29,9 +29,7 @@ public class AndromateSmsReceiver extends BroadcastReceiver {
                     // You can broadcast this internally or update UI
                     if (messageBody != null && messageBody.toLowerCase().contains("open")) {
                         try {
-                            Intent launchIntent = new Intent(context, AndroMateProgressActivity.class);
-                            launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(launchIntent);
+                            AppUtils.openAndromateApp(context);
                         } catch (Throwable t) {
                             Log.e(TAG," cannot launch intent due to "+t);
                         }
