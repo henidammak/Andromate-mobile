@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.CmdTaskResult;
 import com.kam.andromate.utils.ThreadUtils.CmdHelper;
 import com.kam.andromate.utils.ThreadUtils.CmdObserver;
 import com.kam.andromate.view.MainReportSection;
@@ -67,6 +69,11 @@ public class AndroMateCmdTask extends BaseTask {
         );
     }
 
+    @Override
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+
+    }
+
 
     @Override
     public String getBaseTaskStartMsg() {
@@ -79,19 +86,22 @@ public class AndroMateCmdTask extends BaseTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs, Context context) {
+    public CmdTaskResult executeBaseTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
+        CmdTaskResult cmdTaskResult = new CmdTaskResult();
         CmdHelper.executeCommand(cmdText, cmdRoot, new CmdObserver() {
             @Override
             public void onCommandSuccess(String resultCmd) {
-                rs.info("Commande exécutée avec succès.");
-                rs.appendFmvKey("Résultat", resultCmd);
+                rs.appendFmvKey("cmd result", resultCmd);
+                cmdTaskResult.setResultMsg(resultCmd);
             }
 
             @Override
             public void onCommandError(String errorCmd) {
-                rs.errorMsg("Erreur lors de l'exécution de la commande : " + errorCmd);
+                rs.errorMsg("cmd error "+errorCmd);
+                cmdTaskResult.setErrorMsg(errorCmd);
             }
         });
+        return cmdTaskResult;
     }
 
 

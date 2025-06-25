@@ -12,6 +12,8 @@ import com.kam.andromate.controlService.ControlServiceModels.ControlServiceSync;
 import com.kam.andromate.controlService.ControlServiceModels.controlServiceException.ControlServiceException;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.ScreenAutomatorResult;
 import com.kam.andromate.utils.DeviceUtils;
 import com.kam.andromate.utils.ThreadUtils.AndroMateSynchronizer;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
@@ -179,6 +181,11 @@ public class ScreenAutomatorTask extends BaseTask {
     }
 
     @Override
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+
+    }
+
+    @Override
     public String getBaseTaskStartMsg() {
         return "Screen Automator TYPE:"+action_type ;
     }
@@ -189,7 +196,8 @@ public class ScreenAutomatorTask extends BaseTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs, Context context) {
+    public ScreenAutomatorResult executeBaseTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
+        ScreenAutomatorResult screenAutomatorResult = new ScreenAutomatorResult();
         boolean intentCreated = false;
         try {
             Intent intent = ControlServiceFactory.ScreenAutomatorToIntent(this);
@@ -211,16 +219,18 @@ public class ScreenAutomatorTask extends BaseTask {
                     errorMsgDetail = globalAction_type + " not exist";
                     break;
                 case UNSUPPORTED_CONTROL_SERVICE_GLOBAL_ACTION:
-                    errorMsgDetail = globalAction_type+"cannot performed in sdk "+ DeviceUtils.getDeviceSdk();
+                    errorMsgDetail = globalAction_type+" cannot performed in sdk "+ DeviceUtils.getDeviceSdk();
                     break;
             }
             if (errorMsgDetail != null) {
                 errorMsg = errorMsg + " : "+errorMsgDetail;
             }
             rs.errorMsg(errorMsg);
+            screenAutomatorResult.setErrorMsg(errorMsg);
             ThreadHelper.deepSleep(2 * IConstants.SECONDS_VALUE);
         } catch (Throwable t) {
             rs.errorMsg("error not supported "+t);
+            screenAutomatorResult.setErrorMsg(t.toString());
         }
         if (intentCreated) {
             try {
@@ -230,13 +240,22 @@ public class ScreenAutomatorTask extends BaseTask {
                     rs.info("action performed");
                 } else {
                     rs.errorMsg("action cannot performed");
+                    screenAutomatorResult.setErrorMsg("action cannot performed");
                 }
             } catch (TimeoutException e) {
                 rs.errorMsg("timeout action expired "+ControlServiceConstants.DEFAULT_CONTROL_SERVICE_TIME_OUT_MS);
+                screenAutomatorResult.setErrorMsg("timeout action expired "+ControlServiceConstants.DEFAULT_CONTROL_SERVICE_TIME_OUT_MS);
             } catch (ControlServiceException e) {
                 rs.errorMsg("exception received from control service "+e.getErrorCode().getCode());
+                screenAutomatorResult.setErrorMsg("exception received from control service "+e.getErrorCode().getCode());
             }
         }
+        if (screenAutomatorResult.getErrorMsg() != null && !screenAutomatorResult.getErrorMsg().isEmpty()) {
+            screenAutomatorResult.setAutomatorResult(false);
+        } else {
+            screenAutomatorResult.setAutomatorResult(true);
+        }
+        return screenAutomatorResult;
     }
 
     @NonNull
@@ -254,4 +273,5 @@ public class ScreenAutomatorTask extends BaseTask {
                 ", log_screen=" + log_screen +
                 '}';
     }
+
 }

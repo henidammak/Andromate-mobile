@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.TaskResult;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
@@ -24,8 +26,6 @@ public abstract class PipelineTask {
         this.title = title;
     }
 
-    abstract public PipelineTask jsonToPipeLine(JSONObject jo);
-
     public String getIdTask() {
         return idTask;
     }
@@ -34,18 +34,23 @@ public abstract class PipelineTask {
         return title;
     }
 
-    public void execute(MainReportSection rs, Context context) {
+    public void execute(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
         //TODO: Here start recording MainReportSection to get file and save it in db
+        resolveTaskWithContext(andromateTaskContext);
         rs.appendTitle("execute task "+title);
         rs.incTaskMargin();
-        executeTask(rs, context);
+        executeTask(rs, context, andromateTaskContext);
         rs.discTaskMargin();
         rs.appendTitle("end task "+title);
         //TODO stop recording and get file and upload it in db
         //TODO WEB FRONT SHOULD GET THE FILE EXECUTION FOR EACH DEVICE
     }
 
-    abstract public void executeTask(MainReportSection rs, Context context);
+    abstract public TaskResult executeTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext);
+
+    abstract public PipelineTask jsonToPipeLine(JSONObject jo);
+
+    abstract public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext);
 
     @NonNull
     @Override

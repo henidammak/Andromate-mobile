@@ -14,6 +14,7 @@ import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketInterfa
 import com.kam.andromate.messagingController.AndromateWebSocket.WebSocketObserver;
 import com.kam.andromate.model.CompositeTask;
 import com.kam.andromate.model.factory.AndroMateFactory;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
 import com.kam.andromate.utils.AppUtils;
 import com.kam.andromate.utils.ThreadUtils.AndroMateSynchronizer;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
@@ -174,7 +175,7 @@ public class AndroMateTaskManager {
                     ThreadHelper.deepSleep(5 * IConstants.SECONDS_VALUE);
                     rs.incMargin();
                     //TODO: replace executeTask by execute
-                    compositeTaskSynchronizer.result.execute(rs, context);
+                    compositeTaskSynchronizer.result.execute(rs, context, new AndromateTaskContext());
                     rs.info("end task execution");
                     rs.discMargin();
                     AppUtils.moveToFront(context);

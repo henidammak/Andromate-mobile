@@ -5,6 +5,8 @@ import android.content.Context;
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.BaseTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.VoidResult;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
@@ -65,7 +67,7 @@ public class TextReportTask extends BaseTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs, Context context) {
+    public VoidResult executeBaseTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
         switch (type) {
             case ERROR:
                 rs.errorMsg(text);
@@ -80,10 +82,16 @@ public class TextReportTask extends BaseTask {
                 rs.errorMsg("unsupported text type received");
                 break;
         }
+        return new VoidResult();
     }
 
     @Override
     public PipelineTask jsonToPipeLine(JSONObject jo) {
         return null;
+    }
+
+    @Override
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+
     }
 }

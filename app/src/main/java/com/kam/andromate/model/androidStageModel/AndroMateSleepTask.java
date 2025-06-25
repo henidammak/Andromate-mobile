@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.VoidResult;
 import com.kam.andromate.utils.ThreadUtils.ThreadHelper;
 import com.kam.andromate.view.MainReportSection;
 
@@ -52,6 +54,11 @@ public class AndroMateSleepTask extends AndroidTask {
     }
 
     @Override
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+
+    }
+
+    @Override
     public String getBaseTaskStartMsg() {
         return "Sleep time="+timeSleep;
     }
@@ -62,8 +69,9 @@ public class AndroMateSleepTask extends AndroidTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs, Context context) {
+    public VoidResult executeBaseTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
         ThreadHelper.deepSleep(timeSleep);
+        return new VoidResult();
     }
 
     @NonNull

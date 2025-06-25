@@ -5,6 +5,9 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.CompositeTaskResult;
+import com.kam.andromate.model.taskResult.TaskResult;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONObject;
@@ -97,6 +100,7 @@ public class CompositeTask extends PipelineTask{
     public void addLink(Link link) {
         this.links.add(link);
     }
+
     public void addTask(PipelineTask task) {
         this.taskList.add(task);
     }
@@ -107,10 +111,21 @@ public class CompositeTask extends PipelineTask{
     }
 
     @Override
-    public void executeTask(MainReportSection rs, Context context) {
-        for (PipelineTask task : taskList) {
-            task.executeTask(rs, context);
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+        for (PipelineTask pipelineTask : taskList) {
+            pipelineTask.resolveTaskWithContext(andromateTaskContext);
         }
+    }
+
+    @Override
+    public TaskResult executeTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
+        CompositeTaskResult compositeTaskResult = new CompositeTaskResult();
+        TaskResult taskResult = null;
+        for (PipelineTask task : taskList) {
+            taskResult = task.executeTask(rs, context, andromateTaskContext);
+            compositeTaskResult.addTaskResult(taskResult);
+        }
+        return compositeTaskResult;
     }
 
     public void sort() {
@@ -161,7 +176,6 @@ public class CompositeTask extends PipelineTask{
                 ", timeout_ms=" + timeout_ms +
                 ", sequentialExec=" + sequentialExec +
                 ", taskList=" + taskList +
-
                 ", idTask='" + idTask + '\'' +
                 ", title='" + title + '\'' +
                 '}';

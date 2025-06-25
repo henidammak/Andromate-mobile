@@ -2,13 +2,13 @@ package com.kam.andromate.model.androidStageModel;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.kam.andromate.IConstants;
 import com.kam.andromate.model.AndroidTask;
 import com.kam.andromate.model.PipelineTask;
+import com.kam.andromate.model.taskContext.AndromateTaskContext;
+import com.kam.andromate.model.taskResult.VoidResult;
 import com.kam.andromate.view.MainReportSection;
 
 import org.json.JSONException;
@@ -134,6 +134,11 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
     @Override
+    public void resolveTaskWithContext(AndromateTaskContext andromateTaskContext) {
+
+    }
+
+    @Override
     public String getBaseTaskStartMsg() {
         return "Intent: type:"+intentActionType + " action:"+intentAction;
     }
@@ -144,7 +149,7 @@ public class AndroMateIntentTask extends AndroidTask {
     }
 
     @Override
-    public void executeBaseTask(MainReportSection rs, Context context) {
+    public VoidResult executeBaseTask(MainReportSection rs, Context context, AndromateTaskContext andromateTaskContext) {
         Intent intent = null;
         try {
             intent = createTaskIntent();
@@ -167,6 +172,7 @@ public class AndroMateIntentTask extends AndroidTask {
                 }
             }
         }
+        return new VoidResult();
     }
 
 
